@@ -17,7 +17,7 @@ const Header = () => {
   const navigate = useNavigate();
   const [user, setuser] = useState(false);
   return (
-    <nav className="py-6 flex justify-between items-center ">
+    <nav className="py-6 flex justify-between items-center flex-wrap">
       <Link to="/">
         <h1
           className="font-extrabold text-3xl bg-clip-text text-transparent"
@@ -30,7 +30,7 @@ const Header = () => {
           LinkLytics.
         </h1>
       </Link>
-      <div>
+      <div className="flex items-center space-x-4">
         {user ? (
           <Button onClick={() => navigate("/auth")}>Login</Button>
         ) : (

@@ -5,7 +5,7 @@ import Footer from "./components/Footer";
 const AppLayout = ({ children }) => {
   return (
     <>
-      <div className="px-20">
+      <div className="px-4 sm:px-20">
         <Header />
         <main className="min-h-screen container">{children}</main>
       </div>
