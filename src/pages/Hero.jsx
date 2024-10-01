@@ -18,14 +18,13 @@ const Hero = () => {
       >
         Shorten Links, Amplify Insights with LinkLytics
       </h1>
-      <p className="text-gray-400 mt-4 text-center max-w-screen-lg ">
+      <p className="text-gray-400 mt-4 text-center max-w-screen-lg">
         LinkLytics doesn't just shrink URLs—it supercharges them. Create concise
         links in seconds, then harness powerful analytics to understand your
         audience and optimize your reach. Turn every shortened link into a data
         goldmine.
       </p>
 
-      {/* Form wrapping the input and button */}
       <form
         className="flex flex-col sm:flex-row items-center justify-center mt-20 w-full max-w-2xl"
         onSubmit={(e) => e.preventDefault()}
@@ -33,8 +32,7 @@ const Hero = () => {
         <div className="w-full flex flex-col sm:flex-row gap-2">
           <Input
             className="flex-grow h-14 bg-gray-800 text-white placeholder-gray-400
-                       rounded-t-md sm:rounded-l-md sm:rounded-r-none sm:rounded-t-none
-                       focus:outline-none focus:ring-1 focus:ring-white focus:border-transparent"
+                       rounded-t-md sm:rounded-l-md sm:rounded-r-none sm:rounded-t-none focus:outline-none focus:ring-1 focus:ring-white focus:border-transparent"
             placeholder="Enter your URL"
             required
           />
@@ -46,14 +44,16 @@ const Hero = () => {
           </Button>
         </div>
       </form>
-      <div>
-        <FeaturesSection />
-      </div>
-      <div className="mt-8">
+
+      <FeaturesSection />
+
+      {/* Centering CardSection and Accordion */}
+      <div className="flex flex-col items-center w-full mt-20 mb-20">
         <CardSection />
         <Accordion />
       </div>
     </div>
   );
 };
+
 export default Hero;

@@ -10,7 +10,7 @@ const FeatureItem = ({ Icon, title, description }) => (
 );
 
 const FeaturesSection = () => (
-  <div className="w-full max-w-4xl mx-auto mt-24 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+  <div className="w-full max-w-4xl mx-auto mt-24 grid grid-cols-2 gap-8 sm:grid-cols-2 lg:grid-cols-4">
     <FeatureItem
       Icon={BarChart2}
       title="Detailed Analytics"

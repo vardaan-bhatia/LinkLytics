@@ -34,7 +34,7 @@ const CardSection = () => {
     },
   ];
 
-  return <HoverEffect items={cardItems} />;
+  return <HoverEffect items={cardItems} />; // Adjust spacing if needed
 };
 
 export default CardSection;
