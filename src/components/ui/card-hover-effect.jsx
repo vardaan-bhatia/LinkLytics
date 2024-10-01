@@ -1,37 +1,33 @@
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
-import { Button } from "@/components/ui/button"; // Import the button from ShadCN
 
-// Main hover effect component
 export const HoverEffect = ({ items, className }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   return (
     <div
       className={cn(
-        "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-10",
+        "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 py-10",
         className
       )}
     >
       {items.map((item, idx) => (
         <a
-          href={item.link} // Use an <a> tag instead of Next.js Link
+          href={item.link}
           key={item.link}
           className="relative group block p-2 h-full w-full"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
-          target="_blank" // Optional: opens link in a new tab
-          rel="noopener noreferrer" // Security best practice
         >
           <AnimatePresence>
             {hoveredIndex === idx && (
               <motion.span
-                className="absolute inset-0 h-full w-full bg-neutral-200 dark:bg-slate-800/[0.8] block rounded-3xl"
+                className="absolute inset-0 h-full w-full bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 block rounded-3xl opacity-75"
                 layoutId="hoverBackground"
                 initial={{ opacity: 0 }}
                 animate={{
-                  opacity: 1,
+                  opacity: 0.8,
                   transition: { duration: 0.15 },
                 }}
                 exit={{
@@ -42,10 +38,11 @@ export const HoverEffect = ({ items, className }) => {
             )}
           </AnimatePresence>
           <Card>
-            <CardTitle>{item.title}</CardTitle>
+            <div className="flex items-center mb-4">
+              {item.icon}
+              <CardTitle className="ml-2">{item.title}</CardTitle>
+            </div>
             <CardDescription>{item.description}</CardDescription>
-            <Button className="mt-4">Learn More</Button>{" "}
-            {/* Add ShadCN button */}
           </Card>
         </a>
       ))}
@@ -53,12 +50,11 @@ export const HoverEffect = ({ items, className }) => {
   );
 };
 
-// Card component
 export const Card = ({ className, children }) => {
   return (
     <div
       className={cn(
-        "rounded-2xl h-full w-full p-4 overflow-hidden bg-black border border-transparent dark:border-white/[0.2] group-hover:border-slate-700 relative z-20",
+        "rounded-2xl h-full w-full p-4 overflow-hidden bg-gray-900 border border-gray-800 group-hover:border-gray-700 relative z-20",
         className
       )}
     >
@@ -69,21 +65,19 @@ export const Card = ({ className, children }) => {
   );
 };
 
-// Card title component
 export const CardTitle = ({ className, children }) => {
   return (
-    <h4 className={cn("text-zinc-100 font-bold tracking-wide mt-4", className)}>
+    <h4 className={cn("text-white font-bold text-xl", className)}>
       {children}
     </h4>
   );
 };
 
-// Card description component
 export const CardDescription = ({ className, children }) => {
   return (
     <p
       className={cn(
-        "mt-8 text-zinc-400 tracking-wide leading-relaxed text-sm",
+        "mt-2 text-gray-300 tracking-wide leading-relaxed text-sm",
         className
       )}
     >

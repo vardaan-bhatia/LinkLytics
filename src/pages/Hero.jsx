@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import FeaturesSection from "@/components/FeatureSetion";
 import CardSection from "@/components/CardSections";
+import Accordion from "@/components/Accordion";
 
 const Hero = () => {
   return (
@@ -24,28 +25,35 @@ const Hero = () => {
         goldmine.
       </p>
 
-      <div className="flex items-center justify-center mt-20 w-full max-w-2xl">
-        <div className="w-full flex gap-2">
+      {/* Form wrapping the input and button */}
+      <form
+        className="flex flex-col sm:flex-row items-center justify-center mt-20 w-full max-w-2xl"
+        onSubmit={(e) => e.preventDefault()}
+      >
+        <div className="w-full flex flex-col sm:flex-row gap-2">
           <Input
-            className="flex-grow h-14 bg-gray-800 text-white placeholder-gray-400 
-                       rounded-l-md rounded-r-none
+            className="flex-grow h-14 bg-gray-800 text-white placeholder-gray-400
+                       rounded-t-md sm:rounded-l-md sm:rounded-r-none sm:rounded-t-none
                        focus:outline-none focus:ring-1 focus:ring-white focus:border-transparent"
             placeholder="Enter your URL"
+            required
           />
-          <Button className="h-14 px-8 text-lg font-semibold bg-white text-black hover:bg-gray-200 transition-colors duration-200 rounded-none">
+          <Button
+            type="submit"
+            className="h-14 w-full sm:w-auto px-8 text-lg font-semibold bg-white text-black hover:bg-gray-200 transition-colors duration-200 rounded-b-md sm:rounded-none sm:rounded-r-md"
+          >
             Try Now!
           </Button>
         </div>
-      </div>
+      </form>
       <div>
-        {" "}
         <FeaturesSection />
       </div>
       <div className="mt-8">
         <CardSection />
+        <Accordion />
       </div>
     </div>
   );
 };
-
 export default Hero;
