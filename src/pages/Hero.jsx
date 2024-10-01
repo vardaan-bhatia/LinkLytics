@@ -4,8 +4,19 @@ import { Button } from "@/components/ui/button";
 import FeaturesSection from "@/components/FeatureSetion";
 import CardSection from "@/components/CardSections";
 import Accordion from "@/components/Accordion";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Hero = () => {
+  const [longURL, setlongURL] = useState("");
+
+  const navigate = useNavigate();
+  const handlelinkAuth = (e) => {
+    e.preventDefault();
+    if (longURL) {
+      navigate(`/auth?createlink=${longURL}`);
+    }
+  };
   return (
     <div className="flex flex-col items-center mt-14 px-4">
       <h1
@@ -27,7 +38,7 @@ const Hero = () => {
 
       <form
         className="flex flex-col sm:flex-row items-center justify-center mt-20 w-full max-w-2xl"
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={handlelinkAuth}
       >
         <div className="w-full flex flex-col sm:flex-row gap-2">
           <Input
@@ -35,6 +46,7 @@ const Hero = () => {
                        rounded-t-md sm:rounded-l-md sm:rounded-r-none sm:rounded-t-none focus:outline-none focus:ring-1 focus:ring-white focus:border-transparent"
             placeholder="Enter your URL"
             required
+            onChange={(e) => setlongURL(e.target.value)}
           />
           <Button
             type="submit"
@@ -48,8 +60,9 @@ const Hero = () => {
       <FeaturesSection />
 
       {/* Centering CardSection and Accordion */}
-      <div className="flex flex-col items-center w-full mt-20 mb-20">
+      <div className="flex flex-col items-center w-full mt-20 mb-20 px-4">
         <CardSection />
+        <h1 className="text-2xl font-bold mb-4">Frequently Asked Questions</h1>
         <Accordion />
       </div>
     </div>

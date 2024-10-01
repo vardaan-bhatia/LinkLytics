@@ -11,7 +11,7 @@ const Accordion = () => {
     <div className="w-full mx-auto mt-8">
       <UIAccordion type="multiple" collapsible>
         <AccordionItem value="item-1">
-          <AccordionTrigger className="p-4 bg-gray-800 text-white rounded-md hover:bg-gray-700">
+          <AccordionTrigger className="p-4 bg-gray-800 text-white rounded-md hover:bg-gray-700 text-left">
             How does LinkLytics provide analytics?
           </AccordionTrigger>
           <AccordionContent className="p-4 bg-gray-900 text-gray-300 rounded-md mt-2">
@@ -23,7 +23,7 @@ const Accordion = () => {
         </AccordionItem>
         <div className="my-2" />
         <AccordionItem value="item-2">
-          <AccordionTrigger className="p-4 bg-gray-800 text-white rounded-md hover:bg-gray-700">
+          <AccordionTrigger className="p-4 bg-gray-800 text-white rounded-md hover:bg-gray-700 text-left">
             Is LinkLytics secure?
           </AccordionTrigger>
           <AccordionContent className="p-4 bg-gray-900 text-gray-300 rounded-md mt-2">
@@ -34,7 +34,7 @@ const Accordion = () => {
         </AccordionItem>
         <div className="my-2" />
         <AccordionItem value="item-3">
-          <AccordionTrigger className="p-4 bg-gray-800 text-white rounded-md hover:bg-gray-700">
+          <AccordionTrigger className="p-4 bg-gray-800 text-white rounded-md hover:bg-gray-700 text-left">
             Can I track global clicks with LinkLytics?
           </AccordionTrigger>
           <AccordionContent className="p-4 bg-gray-900 text-gray-300 rounded-md mt-2">
@@ -45,7 +45,7 @@ const Accordion = () => {
         </AccordionItem>
         <div className="my-2" />
         <AccordionItem value="item-4">
-          <AccordionTrigger className="p-4 bg-gray-800 text-white rounded-md hover:bg-gray-700">
+          <AccordionTrigger className="p-4 bg-gray-800 text-white rounded-md hover:bg-gray text-left">
             How fast can I create shortened URLs?
           </AccordionTrigger>
           <AccordionContent className="p-4 bg-gray-900 text-gray-300 rounded-md mt-2">

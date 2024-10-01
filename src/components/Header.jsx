@@ -32,8 +32,6 @@ const Header = () => {
       </Link>
       <div className="flex items-center space-x-4">
         {user ? (
-          <Button onClick={() => navigate("/auth")}>Login</Button>
-        ) : (
           <DropdownMenu>
             <DropdownMenuTrigger className="w-10 rounded-full overflow-hidden">
               <Avatar>
@@ -54,6 +52,8 @@ const Header = () => {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+        ) : (
+          <Button onClick={() => navigate("/auth")}>Login</Button>
         )}
       </div>
     </nav>
