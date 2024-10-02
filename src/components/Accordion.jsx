@@ -8,12 +8,7 @@ import {
 
 const Accordion = () => {
   return (
-    <div
-      className="w-full mx-auto mt-8"
-      data-aos="fade-left"
-      data-aos-delay={100}
-      data-aos-duration="800"
-    >
+    <div className="w-full mx-auto mt-8">
       <UIAccordion type="multiple" collapsible>
         <AccordionItem value="item-1">
           <AccordionTrigger className="p-4 bg-gray-800 text-white rounded-md hover:bg-gray-700 text-left">

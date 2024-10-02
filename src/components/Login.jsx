@@ -22,7 +22,12 @@ const Login = () => {
   };
 
   return (
-    <Card className="max-w-md mx-auto mt-10 p-4 shadow-lg">
+    <Card
+      className="max-w-md mx-auto mt-4 shadow-lg"
+      data-aos="fade-right"
+      data-aos-delay={100}
+      data-aos-duration="800"
+    >
       <CardHeader>
         <CardTitle className="text-center text-2xl">Login</CardTitle>
         <CardDescription className="text-center">

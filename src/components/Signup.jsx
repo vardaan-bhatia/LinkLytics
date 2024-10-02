@@ -21,7 +21,12 @@ const Signup = () => {
     if (error) console.error("Google login error:", error.message);
   };
   return (
-    <Card className="max-w-md mx-auto shadow-lg mt-10 p-4">
+    <Card
+      className="max-w-md mx-auto shadow-lg mt-4"
+      data-aos="fade-left"
+      data-aos-delay={100}
+      data-aos-duration="800"
+    >
       <CardHeader>
         <CardTitle className="text-center text-2xl">Signup</CardTitle>
         <CardDescription className="text-center">
@@ -30,6 +35,13 @@ const Signup = () => {
       </CardHeader>
       <CardContent>
         <div className="flex flex-col mt-2 gap-4">
+          <Input
+            name="name"
+            type="name"
+            placeholder="Enter your name"
+            required
+            className="p-2"
+          />
           <Input
             name="email"
             type="email"
@@ -45,11 +57,10 @@ const Signup = () => {
             className="p-2"
           />
           <Input
-            name="confirmPassword"
-            type="password"
-            placeholder="Confirm Password"
-            required
+            name="profile_pic"
+            type="file"
             className="p-2"
+            accept="image/*"
           />
         </div>
       </CardContent>
