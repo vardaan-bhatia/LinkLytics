@@ -6,17 +6,39 @@ import CardSection from "@/components/CardSections";
 import Accordion from "@/components/Accordion";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import Typed from "typed.js";
+import { useEffect, useRef } from "react";
 
 const Hero = () => {
   const [longURL, setlongURL] = useState("");
-
+  const typedRef = useRef(null);
   const navigate = useNavigate();
+
   const handlelinkAuth = (e) => {
     e.preventDefault();
     if (longURL) {
       navigate(`/auth?createlink=${longURL}`);
     }
   };
+
+  useEffect(() => {
+    // Options for Typed.js
+    const options = {
+      strings: ["Turn every shortened link into a data goldmine."],
+      typeSpeed: 50,
+      backSpeed: 25,
+      loop: true,
+    };
+
+    // Initialize Typed.js
+    typedRef.current = new Typed(".typed", options);
+
+    // Cleanup Typed.js instance on component unmount
+    return () => {
+      typedRef.current.destroy();
+    };
+  }, []);
+
   return (
     <div className="flex flex-col items-center mt-14 px-4">
       <h1
@@ -27,13 +49,12 @@ const Hero = () => {
           WebkitTextFillColor: "transparent",
         }}
       >
-        Shorten Links, Amplify Insights with LinkLytics
+        Shorten Links, Amplify Insights with LinkLytics{" "}
       </h1>
       <p className="text-gray-400 mt-4 text-center max-w-screen-lg">
         LinkLytics doesn't just shrink URLs—it supercharges them. Create concise
         links in seconds, then harness powerful analytics to understand your
-        audience and optimize your reach. Turn every shortened link into a data
-        goldmine.
+        audience and optimize your reach.<span className="typed"></span>
       </p>
 
       <form

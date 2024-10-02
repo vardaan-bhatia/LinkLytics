@@ -9,8 +9,17 @@ import {
 } from "@/components/ui/card";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import supabase from "../db/supabase";
+import { FcGoogle } from "react-icons/fc";
 
 const Signup = () => {
+  // Handle Google login
+  const handleGoogleLogin = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+    });
+    if (error) console.error("Google login error:", error.message);
+  };
   return (
     <Card className="max-w-md mx-auto shadow-lg mt-10 p-4">
       <CardHeader>
@@ -44,10 +53,18 @@ const Signup = () => {
           />
         </div>
       </CardContent>
-      <CardFooter className="text-center mt-4">
+      <CardFooter className=" flex flex-col">
         <Button className="w-full bg-blue-500 text-white p-2 hover:bg-blue-600">
           Sign Up
         </Button>
+
+        <button
+          onClick={handleGoogleLogin}
+          className="mt-4 w-full bg-white border border-gray-300 text-gray-700 p-2 rounded-md flex items-center justify-center hover:bg-gray-100"
+        >
+          <FcGoogle className="mr-2" size={24} /> {/* Google icon */}
+          Continue with Google
+        </button>
       </CardFooter>
     </Card>
   );
