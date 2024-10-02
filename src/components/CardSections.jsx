@@ -30,7 +30,7 @@ const CardSection = () => {
     },
   ];
 
-  return <HoverEffect items={cardItems} />;
+  return <HoverEffect items={cardItems} className="cursor-pointer" />;
 };
 
 export default CardSection;
