@@ -15,10 +15,13 @@ export const HoverEffect = ({ items, className }) => {
       {items.map((item, idx) => (
         <a
           href={item.link}
-          key={item.link}
+          key={item.title} // Changed to use item.title as key
           className="relative group block p-2 h-full w-full"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
+          data-aos="fade-up" // AOS animation for the card
+          data-aos-delay={idx * 100} // Stagger effect based on index
+          data-aos-duration="800" // Optional: duration of the animation
         >
           <AnimatePresence>
             {hoveredIndex === idx && (

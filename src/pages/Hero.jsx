@@ -8,11 +8,17 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Typed from "typed.js";
 import { useEffect, useRef } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const Hero = () => {
   const [longURL, setlongURL] = useState("");
   const typedRef = useRef(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    AOS.init(); // Initialize AOS
+  }, []);
 
   const handlelinkAuth = (e) => {
     e.preventDefault();
