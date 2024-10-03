@@ -18,7 +18,7 @@ const Auth = () => {
     <div className=" flex flex-col items-center">
       <div className="text-center text-3xl font-bold">
         {createLink ? (
-          <h1>Hold on! First, login/sign up to create your short link.</h1>
+          <h1>Hold on! First, login or sign up to create your short link.</h1>
         ) : (
           <h1>Welcome! Login in or create an account to get started.</h1>
         )}
