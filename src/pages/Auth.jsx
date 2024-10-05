@@ -15,8 +15,8 @@ const Auth = () => {
     AOS.init(); // Initialize AOS
   }, []);
   return (
-    <div className=" flex flex-col items-center">
-      <div className="text-center text-3xl font-bold">
+    <div className=" flex flex-col items-center mt-10 sm:mt-0">
+      <div className="text-center text-3xl font-bold ">
         {createLink ? (
           <h1>Hold on! First, login or sign up to create your short link.</h1>
         ) : (

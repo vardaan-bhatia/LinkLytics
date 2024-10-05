@@ -10,6 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import supabase from "../db/supabase";
+import { SyncLoader } from "react-spinners";
 import { FcGoogle } from "react-icons/fc"; // Import Google icon
 
 const Login = () => {
@@ -53,17 +54,17 @@ const Login = () => {
         </div>
       </CardContent>
       <CardFooter className=" flex flex-col">
-        <Button className="w-full bg-blue-500 text-white p-2 hover:bg-blue-600">
-          Login
+        <Button className="w-full bg-blue-500 text-white p-4 hover:bg-blue-600">
+          {true ? <SyncLoader color="#fdf8fa" size={7} /> : Login}
         </Button>
         {/* Google Login Button */}
-        <button
+        <Button
           onClick={handleGoogleLogin}
           className="mt-4 w-full bg-white border border-gray-300 text-gray-700 p-2 rounded-md flex items-center justify-center hover:bg-gray-100"
         >
           <FcGoogle className="mr-2" size={24} /> {/* Google icon */}
           Continue with Google
-        </button>
+        </Button>
       </CardFooter>
     </Card>
   );
