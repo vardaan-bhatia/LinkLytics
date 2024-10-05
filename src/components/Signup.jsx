@@ -12,6 +12,7 @@ import { Button } from "./ui/button";
 import supabase from "../db/supabase";
 import { FcGoogle } from "react-icons/fc";
 import { SyncLoader } from "react-spinners";
+import Error from "./Error";
 
 const Signup = () => {
   // Handle Google login
@@ -23,7 +24,7 @@ const Signup = () => {
   };
   return (
     <Card
-      className="max-w-md mx-auto shadow-lg mt-4"
+      className="max-w-md mx-auto shadow-lg mt-4 mb-8"
       data-aos="fade-left"
       data-aos-delay={100}
       data-aos-duration="800"
@@ -43,6 +44,7 @@ const Signup = () => {
             required
             className="p-2"
           />
+          <Error error="jery" />
           <Input
             name="email"
             type="email"
@@ -50,6 +52,7 @@ const Signup = () => {
             required
             className="p-2"
           />
+          <Error error="jery" />
           <Input
             name="password"
             type="password"
@@ -57,12 +60,14 @@ const Signup = () => {
             required
             className="p-2"
           />
+          <Error error="jery" />
           <Input
             name="profile_pic"
             type="file"
             className="p-2"
             accept="image/*"
           />
+          <Error error="jery" />
         </div>
       </CardContent>
       <CardFooter className=" flex flex-col">
