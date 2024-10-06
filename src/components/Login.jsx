@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -12,25 +11,37 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import supabase from "../db/supabase";
 import { SyncLoader } from "react-spinners";
-import { FcGoogle } from "react-icons/fc"; // Import Google icon
+import { FcGoogle } from "react-icons/fc";
 import Error from "./Error";
 import * as Yup from "yup";
+import useFetch from "@/Hooks/useFetch";
+import { login } from "@/db/apiAuth";
+import { urlState } from "@/UserContext";
+
+// validation schema
+const schema = Yup.object().shape({
+  email: Yup.string()
+    .email("Invalid email format")
+    .required("Email is required"),
+  password: Yup.string()
+    .min(6, "Password must be at least 6 characters")
+    .matches(/[a-zA-Z]/, "Password must contain at least one letter")
+    .required("Password is required"),
+});
 
 const Login = () => {
-  const [formData, setformData] = useState({ email: "", password: "" });
-  const [formError, setformError] = useState({});
+  // State for form data and error handling
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formError, setFormError] = useState({});
+  const { data, loading, error, fn } = useFetch(login, formData);
+  const { fetchUser } = urlState();
 
-  const schema = Yup.object().shape({
-    email: Yup.string()
-      .email("Invalid email format")
-      .required("Email is required"),
-    password: Yup.string()
-      .min(8, "Password must be at least 8 characters")
-      .matches(/[a-zA-Z]/, "Password must contain at least one letter")
-      .required("Password is required"),
-  });
-
-  const validate = async (data) => {};
+  // Effect to handle user fetching
+  useEffect(() => {
+    if (data) {
+      fetchUser(); // Fetch user details after successful login
+    }
+  }, [data, fetchUser]);
 
   // Handle Google login
   const handleGoogleLogin = async () => {
@@ -40,22 +51,30 @@ const Login = () => {
     if (error) console.error("Google login error:", error.message);
   };
 
+  // Handle form input change
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setformData({ ...formData, [name]: value });
+    setFormData({ ...formData, [name]: value });
   };
 
+  // Handle login functionality
   const handleLogin = async () => {
-    setformError([]);
+    setFormError({}); // Reset previous errors
     try {
-      await schema.validate(formData, { abortEarly: false });
-      return {};
+      await schema.validate(formData, { abortEarly: false }); // Validate input
+      await fn(); // Proceed with login using fetch
     } catch (e) {
-      const errors = {};
-      e?.inner?.forEach((err) => {
-        errors[err.path] = err.message;
+      const newErrors = {}; // Initialize a new errors object
+      e.inner.forEach((err) => {
+        newErrors[err.path] = err.message; // Collect validation errors
       });
-      setformError(errors);
+      setFormError(newErrors); // Update state with new errors
+    }
+  };
+
+  const handleKey = (e) => {
+    if (e.key === "Enter") {
+      handleLogin(); // Trigger login on Enter key press
     }
   };
 
@@ -73,7 +92,11 @@ const Login = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-col space-y-4">
+        {error && <Error message={error.message} />}{" "}
+        {/* General error message */}
+        {formError.general && <Error message={formError.general} />}{" "}
+        {/* General form error */}
+        <div className="flex flex-col space-y-6" onKeyPress={handleKey}>
           <Input
             name="email"
             type="email"
@@ -83,7 +106,8 @@ const Login = () => {
             value={formData.email}
             onChange={handleChange}
           />
-          {formError.email && <Error msg={formError.email} />}
+          {formError.email && <Error message={formError.email} />}{" "}
+          {/* Email-specific error */}
           <Input
             name="password"
             type="password"
@@ -93,22 +117,26 @@ const Login = () => {
             value={formData.password}
             onChange={handleChange}
           />
-          {formError.password && <Error msg={formError.password} />}
+          {formError.password && <Error message={formError.password} />}{" "}
+          {/* Password-specific error */}
         </div>
       </CardContent>
-      <CardFooter className=" flex flex-col">
+      <CardFooter className="flex flex-col">
         <Button
           className="w-full bg-blue-500 text-white p-4 hover:bg-blue-600"
-          onClick={handleLogin}
+          onClick={handleLogin} // Trigger login on button click
+          disabled={loading} // Disable button while loading
         >
-          {true ? <SyncLoader color="#fdf8fa" size={7} /> : Login}
+          {loading ? <SyncLoader color="#fdf8fa" size={7} /> : "Login"}{" "}
+          {/* Show loader or text */}
         </Button>
         {/* Google Login Button */}
         <Button
-          onClick={handleGoogleLogin}
+          onClick={handleGoogleLogin} // Trigger Google login on button click
+          disabled={loading} // Disable button while loading
           className="mt-4 w-full bg-white border border-gray-300 text-gray-700 p-2 rounded-md flex items-center justify-center hover:bg-gray-100"
         >
-          <FcGoogle className="mr-2" size={24} /> {/* Google icon */}
+          <FcGoogle className="mr-2" size={24} />
           Continue with Google
         </Button>
       </CardFooter>

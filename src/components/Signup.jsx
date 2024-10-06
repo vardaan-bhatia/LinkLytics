@@ -36,7 +36,7 @@ const Signup = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-col mt-2 gap-4">
+        <div className="flex flex-col mt-2 space-y-2">
           <Input
             name="name"
             type="name"
