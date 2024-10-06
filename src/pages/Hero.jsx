@@ -23,7 +23,7 @@ const Hero = () => {
   const handlelinkAuth = (e) => {
     e.preventDefault();
     if (longURL) {
-      navigate(`/auth?createlink=${longURL}`);
+      navigate(`/auth?createNew=${longURL}`);
     }
   };
 

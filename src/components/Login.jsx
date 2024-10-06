@@ -17,6 +17,7 @@ import * as Yup from "yup";
 import useFetch from "@/Hooks/useFetch";
 import { login } from "@/db/apiAuth";
 import { urlState } from "@/UserContext";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 // validation schema
 const schema = Yup.object().shape({
@@ -35,13 +36,17 @@ const Login = () => {
   const [formError, setFormError] = useState({});
   const { data, loading, error, fn } = useFetch(login, formData);
   const { fetchUser } = urlState();
+  const [searchParams] = useSearchParams();
+  const createlink = searchParams.get("createNew");
+  const navigate = useNavigate();
 
   // Effect to handle user fetching
   useEffect(() => {
-    if (data) {
-      fetchUser(); // Fetch user details after successful login
+    if (error == null && data) {
+      fetchUser();
+      navigate(`/dashboard?${createlink ? `createNew=${createlink}` : ""}`); // Fetch user details after successful login
     }
-  }, [data, fetchUser]);
+  }, [data, fetchUser, navigate]);
 
   // Handle Google login
   const handleGoogleLogin = async () => {
@@ -93,9 +98,6 @@ const Login = () => {
       </CardHeader>
       <CardContent>
         {error && <Error message={error.message} />}{" "}
-        {/* General error message */}
-        {formError.general && <Error message={formError.general} />}{" "}
-        {/* General form error */}
         <div className="flex flex-col space-y-6" onKeyPress={handleKey}>
           <Input
             name="email"

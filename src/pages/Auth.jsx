@@ -10,7 +10,7 @@ import "aos/dist/aos.css";
 // Import Supabase client
 const Auth = () => {
   const [searchParams] = useSearchParams(); // Call useSearchParams hook
-  const createLink = searchParams.get("createlink"); // Get 'createlink' param
+  const createLink = searchParams.get("createNew"); // Get 'createlink' param
   useEffect(() => {
     AOS.init(); // Initialize AOS
   }, []);
