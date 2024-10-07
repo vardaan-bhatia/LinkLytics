@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -7,14 +7,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import supabase from "../db/supabase";
-import { FcGoogle } from "react-icons/fc";
 import { SyncLoader } from "react-spinners";
+import { FcGoogle } from "react-icons/fc";
 import Error from "./Error";
 import * as Yup from "yup";
+import useFetch from "@/Hooks/useFetch";
+import { signup } from "@/db/apiAuth";
+import { urlState } from "@/UserContext";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
+// validation schema
 const schema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
   email: Yup.string()
@@ -28,6 +33,7 @@ const schema = Yup.object().shape({
 });
 
 const Signup = () => {
+  // State for form data and error handling
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -35,29 +41,19 @@ const Signup = () => {
     display_pic: null,
   });
   const [formError, setFormError] = useState({});
+  const { data, loading, error, fn } = useFetch(signup, formData);
+  const { fetchUser } = urlState();
+  const [searchParams] = useSearchParams();
+  const createlink = searchParams.get("createNew");
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSignup = async () => {
-    setFormError({}); // Reset previous errors
-    try {
-      await schema.validate(formData, { abortEarly: false });
-      // api call
-    } catch (error) {
-      const newError = {};
-      error.inner.forEach((e) => (newError[e.path] = e.message));
-      setFormError(newError);
+  // Effect to handle user fetching
+  useEffect(() => {
+    if (error == null && data) {
+      fetchUser();
+      navigate(`/dashboard?${createlink ? `createNew=${createlink}` : ""}`);
     }
-  };
-
-  const handleKey = (e) => {
-    if (e.key == "Enter") {
-      handleSignup();
-    }
-  };
+  }, [data, fetchUser, navigate, createlink]);
 
   // Handle Google login
   const handleGoogleLogin = async () => {
@@ -67,9 +63,39 @@ const Signup = () => {
     if (error) console.error("Google login error:", error.message);
   };
 
+  // Handle form input change
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: files ? files[0] : value,
+    }));
+  };
+
+  // Handle signup functionality
+  const handleSignup = async () => {
+    setFormError({}); // Reset previous errors
+    try {
+      await schema.validate(formData, { abortEarly: false }); // Validate input
+      await fn(); // Proceed with signup using fetch
+    } catch (e) {
+      const newErrors = {}; // Initialize a new errors object
+      e.inner.forEach((err) => {
+        newErrors[err.path] = err.message; // Collect validation errors
+      });
+      setFormError(newErrors); // Update state with new errors
+    }
+  };
+
+  const handleKey = (e) => {
+    if (e.key === "Enter") {
+      handleSignup(); // Trigger signup on Enter key press
+    }
+  };
+
   return (
     <Card
-      className="max-w-md mx-auto shadow-lg mt-4 mb-8"
+      className="max-w-md mx-auto mt-4 shadow-lg mb-8"
       data-aos="fade-left"
       data-aos-delay={100}
       data-aos-duration="800"
@@ -81,51 +107,59 @@ const Signup = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-col mt-2 space-y-2" onKeyPress={handleKey}>
+        {error && <Error message={error.message} />}
+        <div className="flex flex-col space-y-6" onKeyPress={handleKey}>
           <Input
             name="name"
-            type="name"
+            type="text"
             placeholder="Enter your name"
             className="p-2"
+            value={formData.name}
             onChange={handleChange}
           />
-          <Error error="jery" />
+          {formError.name && <Error message={formError.name} />}
           <Input
             name="email"
             type="email"
             placeholder="Email"
             className="p-2"
+            value={formData.email}
             onChange={handleChange}
           />
-          <Error error="jery" />
+          {formError.email && <Error message={formError.email} />}
           <Input
             name="password"
             type="password"
             placeholder="Password"
             className="p-2"
+            value={formData.password}
             onChange={handleChange}
           />
-          <Error error="jery" />
+          {formError.password && <Error message={formError.password} />}
           <Input
-            name="profile_pic"
+            name="display_pic"
             type="file"
             className="p-2"
             accept="image/*"
             onChange={handleChange}
           />
-          <Error error="jery" />
+          {formError.display_pic && <Error message={formError.display_pic} />}
         </div>
       </CardContent>
-      <CardFooter className=" flex flex-col">
-        <Button className="w-full bg-blue-500 text-white p-2 hover:bg-blue-600">
-          {true ? <SyncLoader color="#fdf8fa" size={7} /> : SignUp}
+      <CardFooter className="flex flex-col">
+        <Button
+          className="w-full bg-blue-500 text-white p-4 hover:bg-blue-600"
+          onClick={handleSignup}
+          disabled={loading}
+        >
+          {loading ? <SyncLoader color="#fdf8fa" size={7} /> : "Signup"}
         </Button>
-
         <Button
           onClick={handleGoogleLogin}
+          disabled={loading}
           className="mt-4 w-full bg-white border border-gray-300 text-gray-700 p-2 rounded-md flex items-center justify-center hover:bg-gray-100"
         >
-          <FcGoogle className="mr-2" size={24} /> {/* Google icon */}
+          <FcGoogle className="mr-2" size={24} />
           Continue with Google
         </Button>
       </CardFooter>

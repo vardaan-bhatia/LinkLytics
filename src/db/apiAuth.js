@@ -31,7 +31,7 @@ export const signup = async ({ name, email, password, display_pic }) => {
     throw new Error(storageErr.message);
   }
 
-  const { data, error } = await supabase.signup({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
