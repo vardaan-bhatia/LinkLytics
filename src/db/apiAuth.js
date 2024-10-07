@@ -1,4 +1,5 @@
-import supabase from "./supabase";
+import { AppWindow } from "lucide-react";
+import supabase, { supabaseUrl } from "./supabase";
 
 // login api
 export const login = async ({ email, password }) => {
@@ -17,4 +18,29 @@ export const getCurrentUser = async () => {
   if (error) throw new Error(error.message); // Handle error
   if (!data.session) return null; // If no session, return null
   return data.session?.user; // Return the user if session exists
+};
+
+// SignUp Api
+export const signup = async ({ name, email, password, display_pic }) => {
+  const fileName = `dp-${name.split(" ").join("-")}-${Math.random()}`;
+  const { error: storageErr } = await supabase.storage
+    .from("display_pic")
+    .upload(fileName, display_pic);
+
+  if (storageErr) {
+    throw new Error(storageErr.message);
+  }
+
+  const { data, error } = await supabase.signup({
+    email,
+    password,
+    options: {
+      data: {},
+      name,
+      picture: `${supabaseUrl}/storage/v1/object/public/profile_pic/${fileName}`,
+    },
+  });
+  if (error) throw new Error(error.message);
+
+  return data;
 };
