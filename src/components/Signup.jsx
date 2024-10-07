@@ -13,8 +13,52 @@ import supabase from "../db/supabase";
 import { FcGoogle } from "react-icons/fc";
 import { SyncLoader } from "react-spinners";
 import Error from "./Error";
+import * as Yup from "yup";
+
+const schema = Yup.object().shape({
+  name: Yup.string().required("Name is required"),
+  email: Yup.string()
+    .email("Invalid email format")
+    .required("Email is required"),
+  password: Yup.string()
+    .min(6, "Password must be at least 6 characters")
+    .matches(/[a-zA-Z]/, "Password must contain at least one letter")
+    .required("Password is required"),
+  display_pic: Yup.mixed().required("Profile picture is required"),
+});
 
 const Signup = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    display_pic: null,
+  });
+  const [formError, setFormError] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSignup = async () => {
+    setFormError({}); // Reset previous errors
+    try {
+      await schema.validate(formData, { abortEarly: false });
+      // api call
+    } catch (error) {
+      const newError = {};
+      error.inner.forEach((e) => (newError[e.path] = e.message));
+      setFormError(newError);
+    }
+  };
+
+  const handleKey = (e) => {
+    if (e.key == "Enter") {
+      handleSignup();
+    }
+  };
+
   // Handle Google login
   const handleGoogleLogin = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
@@ -22,6 +66,7 @@ const Signup = () => {
     });
     if (error) console.error("Google login error:", error.message);
   };
+
   return (
     <Card
       className="max-w-md mx-auto shadow-lg mt-4 mb-8"
@@ -36,29 +81,29 @@ const Signup = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-col mt-2 space-y-2">
+        <div className="flex flex-col mt-2 space-y-2" onKeyPress={handleKey}>
           <Input
             name="name"
             type="name"
             placeholder="Enter your name"
-            required
             className="p-2"
+            onChange={handleChange}
           />
           <Error error="jery" />
           <Input
             name="email"
             type="email"
             placeholder="Email"
-            required
             className="p-2"
+            onChange={handleChange}
           />
           <Error error="jery" />
           <Input
             name="password"
             type="password"
             placeholder="Password"
-            required
             className="p-2"
+            onChange={handleChange}
           />
           <Error error="jery" />
           <Input
@@ -66,6 +111,7 @@ const Signup = () => {
             type="file"
             className="p-2"
             accept="image/*"
+            onChange={handleChange}
           />
           <Error error="jery" />
         </div>
