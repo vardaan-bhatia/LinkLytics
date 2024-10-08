@@ -1,19 +1,17 @@
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import FeaturesSection from "@/components/FeatureSetion";
+import InfiniteSlider from "@/components/FeatureSetion";
 import CardSection from "@/components/CardSections";
 import Accordion from "@/components/Accordion";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import Typed from "typed.js";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
 const Hero = () => {
   const [longURL, setlongURL] = useState("");
-  const typedRef = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,24 +24,6 @@ const Hero = () => {
       navigate(`/auth?createNew=${longURL}`);
     }
   };
-
-  useEffect(() => {
-    // Options for Typed.js
-    const options = {
-      strings: ["Turn every shortened link into a data goldmine."],
-      typeSpeed: 50,
-      backSpeed: 25,
-      loop: true,
-    };
-
-    // Initialize Typed.js
-    typedRef.current = new Typed(".typed", options);
-
-    // Cleanup Typed.js instance on component unmount
-    return () => {
-      typedRef.current.destroy();
-    };
-  }, []);
 
   return (
     <div className="flex flex-col items-center mt-14 px-4">
@@ -60,7 +40,8 @@ const Hero = () => {
       <p className="text-gray-400 mt-4 text-center max-w-screen-lg">
         LinkLytics doesn't just shrink URLs—it supercharges them. Create concise
         links in seconds, then harness powerful analytics to understand your
-        audience and optimize your reach.<span className="typed"></span>
+        audience and optimize your reach.Turn every shortened link into a data
+        goldmine.
       </p>
 
       <form
@@ -84,7 +65,7 @@ const Hero = () => {
         </div>
       </form>
 
-      <FeaturesSection />
+      <InfiniteSlider />
 
       {/* Centering CardSection and Accordion */}
       <div className="flex flex-col items-center w-full mt-20 mb-20 px-4">

@@ -40,12 +40,7 @@ const Header = () => {
           <DropdownMenu>
             <DropdownMenuTrigger className="w-10 rounded-full overflow-hidden">
               <Avatar>
-                <AvatarImage
-                  src={
-                    user?.user_metadata?.display_pic ||
-                    "https://github.com/shadcn.png"
-                  }
-                />
+                <AvatarImage src={user?.user_metadata?.display_pic} />
                 <AvatarFallback>{user.name}</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>

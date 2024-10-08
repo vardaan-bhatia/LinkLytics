@@ -32,7 +32,7 @@
     "react-spinners": "^0.14.1",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
-    "typed.js": "^2.1.0",
+    "type": "^2.7.3",
     "yup": "^1.4.0"
   },
   "devDependencies": {
