@@ -1,4 +1,3 @@
-import { AppWindow } from "lucide-react";
 import supabase, { supabaseUrl } from "./supabase";
 
 // login api
@@ -10,6 +9,14 @@ export const login = async ({ email, password }) => {
   if (error) throw new Error(error.message);
 
   return data;
+};
+
+// logOut
+export const logOut = async () => {
+  const { error } = await supabase.auth.signOut();
+  if (error) {
+    throw new Error(error.message);
+  }
 };
 
 // get current user from the local state
@@ -37,7 +44,7 @@ export const signup = async ({ name, email, password, display_pic }) => {
     options: {
       data: {},
       name,
-      picture: `${supabaseUrl}/storage/v1/object/public/profile_pic/${fileName}`,
+      picture: `${supabaseUrl}/storage/v1/object/public/display_pic/${fileName}`,
     },
   });
   if (error) throw new Error(error.message);

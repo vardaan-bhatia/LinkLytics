@@ -50,10 +50,24 @@ const Signup = () => {
   // Effect to handle user fetching
   useEffect(() => {
     if (error == null && data) {
-      fetchUser();
       navigate(`/dashboard?${createlink ? `createNew=${createlink}` : ""}`);
     }
-  }, [data, fetchUser, navigate, createlink]);
+  }, [error, loading]);
+
+  // useEffect(() => {
+  //   const { data: authListener } = supabase.auth.onAuthStateChange(
+  //     async (event, session) => {
+  //       if (session) {
+  //         // User is logged in, redirect to dashboard
+  //         navigate("/dashboard");
+  //       }
+  //     }
+  //   );
+
+  //   return () => {
+  //     authListener.subscription.unsubscribe();
+  //   };
+  // }, [navigate]);
 
   // Handle Google login
   const handleGoogleLogin = async () => {

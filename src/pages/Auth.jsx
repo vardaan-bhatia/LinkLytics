@@ -1,16 +1,25 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Login from "@/components/Login";
 import Signup from "@/components/Signup";
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { urlState } from "@/UserContext";
 
 // Import Supabase client
 const Auth = () => {
   const [searchParams] = useSearchParams(); // Call useSearchParams hook
-  const createLink = searchParams.get("createNew"); // Get 'createlink' param
+  const createLink = searchParams.get("createNew");
+  const navigate = useNavigate();
+  const { isAuthenticated, loading } = urlState();
+  useEffect(() => {
+    if (isAuthenticated && !loading) {
+      navigate(`/dashboard?${createLink ? `createNew=${createLink}` : ""}`);
+    }
+  }, [isAuthenticated, loading]);
+
   useEffect(() => {
     AOS.init(); // Initialize AOS
   }, []);

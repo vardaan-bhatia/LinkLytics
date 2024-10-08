@@ -9,13 +9,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useState } from "react";
+import { urlState } from "@/UserContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link2Icon, LogOut } from "lucide-react";
+import { logOut } from "@/db/apiAuth";
 
 const Header = () => {
   const navigate = useNavigate();
-  const [user, setuser] = useState(false);
+  const { user } = urlState();
+
+  const handleLogout = () => {
+    logOut();
+  };
   return (
     <nav className="py-6 flex justify-between items-center flex-wrap">
       <Link to="/">
@@ -35,12 +40,17 @@ const Header = () => {
           <DropdownMenu>
             <DropdownMenuTrigger className="w-10 rounded-full overflow-hidden">
               <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>VB</AvatarFallback>
+                <AvatarImage
+                  src={
+                    user?.user_metadata?.display_pic ||
+                    "https://github.com/shadcn.png"
+                  }
+                />
+                <AvatarFallback>{user.name}</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuLabel>Vardaan Bhatia</DropdownMenuLabel>
+              <DropdownMenuLabel>{user.name}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <Link2Icon className="mr-2 h-4 w-4" />
@@ -48,7 +58,7 @@ const Header = () => {
               </DropdownMenuItem>
               <DropdownMenuItem className="text-red-500">
                 <LogOut className="mr-2 h-4 w-4" />
-                <span>Logout</span>
+                <span onClick={handleLogout}>Logout</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
