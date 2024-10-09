@@ -51,7 +51,12 @@ const Header = () => {
           <DropdownMenu>
             <DropdownMenuTrigger className="w-10 rounded-full overflow-hidden">
               <Avatar>
-                <AvatarImage src={user?.user_metadata?.profile_pic} />
+                <AvatarImage
+                  src={
+                    user?.user_metadata?.profile_pic ||
+                    user?.user_metadata?.avatar_url
+                  }
+                />
                 <AvatarFallback>{user?.user_metadata?.name}</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
@@ -69,7 +74,12 @@ const Header = () => {
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
-          <Button onClick={() => navigate("/auth")}>Login</Button>
+          <Button
+            onClick={() => navigate("/auth")}
+            className="hover:bg-blue-400 hover:text-white"
+          >
+            Login
+          </Button>
         )}
       </div>
       {loading && (

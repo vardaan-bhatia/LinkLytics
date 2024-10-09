@@ -9,14 +9,12 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import supabase from "../db/supabase";
 import { SyncLoader } from "react-spinners";
 import { FcGoogle } from "react-icons/fc";
 import Error from "./Error";
 import * as Yup from "yup";
 import useFetch from "@/Hooks/useFetch";
-import { signup } from "@/db/apiAuth";
-import { urlState } from "@/UserContext";
+import { googleLogin, signup } from "@/db/apiAuth";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 const Signup = () => {
@@ -40,27 +38,13 @@ const Signup = () => {
     }
   }, [error, loading]);
 
-  // useEffect(() => {
-  //   const { data: authListener } = supabase.auth.onAuthStateChange(
-  //     async (event, session) => {
-  //       if (session) {
-  //         // User is logged in, redirect to dashboard
-  //         navigate("/dashboard");
-  //       }
-  //     }
-  //   );
-
-  //   return () => {
-  //     authListener.subscription.unsubscribe();
-  //   };
-  // }, [navigate]);
-
-  // Handle Google login
   const handleGoogleLogin = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-    });
-    if (error) console.error("Google login error:", error.message);
+    try {
+      await googleLogin();
+    } catch (error) {
+      console.error("Google login error:", error);
+      setFormError({ api: "Failed to login with Google. Please try again." });
+    }
   };
 
   // Handle form input change

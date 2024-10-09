@@ -15,7 +15,7 @@ import { FcGoogle } from "react-icons/fc";
 import Error from "./Error";
 import * as Yup from "yup";
 import useFetch from "@/Hooks/useFetch";
-import { login } from "@/db/apiAuth";
+import { login, googleLogin } from "@/db/apiAuth";
 import { urlState } from "@/UserContext";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
@@ -37,34 +37,14 @@ const Login = () => {
     }
   }, [data, fetchUser, navigate]);
 
-  // Handle Google login
   const handleGoogleLogin = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-    });
-
-    if (error) {
-      console.error("Google login error:", error.message);
-    } else {
-      const { user, session } = data;
-
-      // Fetch the user's Google profile info, including the profile picture
-      const profilePicUrl = user?.user_metadata?.avatar_url;
-
-      if (profilePicUrl) {
-        // You can save the profile pic URL to the user data in the Supabase database
-        const { error: updateError } = await supabase
-          .from("users")
-          .update({ profile_pic: profilePicUrl })
-          .eq("id", user.id);
-
-        if (updateError) {
-          console.error("Error updating profile picture:", updateError.message);
-        }
-      }
+    try {
+      await googleLogin();
+    } catch (error) {
+      console.error("Google login error:", error);
+      setFormError({ api: "Failed to login with Google. Please try again." });
     }
   };
-
   // Handle form input change
   const handleChange = (e) => {
     const { name, value } = e.target;

@@ -28,7 +28,7 @@ export const getCurrentUser = async () => {
 };
 
 // SignUp Api
-export async function signup({ name, email, password, profile_pic }) {
+export const signup = async ({ name, email, password, profile_pic }) => {
   const fileName = `dp-${name.split(" ").join("-")}-${Math.random()}`;
 
   const { error: storageError } = await supabase.storage
@@ -51,4 +51,12 @@ export async function signup({ name, email, password, profile_pic }) {
   if (error) throw new Error(error.message);
 
   return data;
-}
+};
+
+// Google signin
+export const googleLogin = async () => {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+  });
+  if (error) console.error("Google login error:", error.message);
+};
