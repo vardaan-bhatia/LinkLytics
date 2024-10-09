@@ -131,6 +131,7 @@ const Signup = () => {
             type="text"
             placeholder="Enter your name"
             className="p-2"
+            value={formData.name}
             onChange={handleChange}
           />
           {formError.name && <Error message={formError.name} />}
@@ -138,6 +139,7 @@ const Signup = () => {
             name="email"
             type="email"
             placeholder="Email"
+            value={formData.email}
             className="p-2"
             onChange={handleChange}
           />
@@ -146,6 +148,7 @@ const Signup = () => {
             name="password"
             type="password"
             placeholder="Password"
+            value={formData.password}
             className="p-2"
             onChange={handleChange}
           />

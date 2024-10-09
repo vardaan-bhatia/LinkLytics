@@ -14,6 +14,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link2Icon, LogOut } from "lucide-react";
 import { logOut } from "@/db/apiAuth";
 import useFetch from "@/Hooks/useFetch";
+import { BarLoader } from "react-spinners";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -22,9 +23,13 @@ const Header = () => {
   const { loading, fn } = useFetch(logOut);
 
   const handleLogout = async () => {
-    await fn(); //fn() completes
-    await fetchUser(); // This will fetch the user from the session from contextApi
-    navigate("/"); // Only navigate after fn() has resolved
+    try {
+      await fn(); // Complete logout
+      await fetchUser(); // Fetch updated user state
+      navigate("/"); // Navigate after fetching user data
+    } catch (error) {
+      console.error("Logout failed", error); // Handle error appropriately
+    }
   };
 
   return (
@@ -67,6 +72,16 @@ const Header = () => {
           <Button onClick={() => navigate("/auth")}>Login</Button>
         )}
       </div>
+      {loading && (
+        <div
+          className="w-full"
+          style={{
+            background: "linear-gradient(to right, #f64f59, #c471ed, #12c2e9)",
+          }}
+        >
+          <BarLoader width={"100%"} color="#ffffff" />
+        </div>
+      )}{" "}
     </nav>
   );
 };
