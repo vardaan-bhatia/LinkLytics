@@ -53,10 +53,11 @@ export const signup = async ({ name, email, password, profile_pic }) => {
   return data;
 };
 
-// Google signin
+// Google signin with redirect handling
 export const googleLogin = async () => {
-  const { error } = await supabase.auth.signInWithOAuth({
+  const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
   });
-  if (error) console.error("Google login error:", error.message);
+  if (error) throw new Error(error.message);
+  return data;
 };

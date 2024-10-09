@@ -84,7 +84,7 @@ const Header = () => {
       </div>
       {loading && (
         <div
-          className="w-full"
+          className="w-full mt-4 "
           style={{
             background: "linear-gradient(to right, #f64f59, #c471ed, #12c2e9)",
           }}
