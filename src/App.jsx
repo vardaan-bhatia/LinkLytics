@@ -6,6 +6,7 @@ import Hero from "./pages/Hero";
 import Link from "./pages/link";
 import RedirectLink from "./pages/redirectLink";
 import AppLayout from "./appLayout"; // Contains nav and header
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   return (
@@ -14,9 +15,23 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Hero />} />
           <Route path="/auth" element={<Auth />} />
-          <Route path="/link/:id" element={<Link />} />
+          <Route
+            path="/link/:id"
+            element={
+              <ProtectedRoute>
+                <Link />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/:id" element={<RedirectLink />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </AppLayout>
     </Router>

@@ -19,17 +19,6 @@ import { login } from "@/db/apiAuth";
 import { urlState } from "@/UserContext";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-// validation schema
-const schema = Yup.object().shape({
-  email: Yup.string()
-    .email("Invalid email format")
-    .required("Email is required"),
-  password: Yup.string()
-    .min(6, "Password must be at least 6 characters")
-    .matches(/[a-zA-Z]/, "Password must contain at least one letter")
-    .required("Password is required"),
-});
-
 const Login = () => {
   // State for form data and error handling
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -50,10 +39,30 @@ const Login = () => {
 
   // Handle Google login
   const handleGoogleLogin = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
+    const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
     });
-    if (error) console.error("Google login error:", error.message);
+
+    if (error) {
+      console.error("Google login error:", error.message);
+    } else {
+      const { user, session } = data;
+
+      // Fetch the user's Google profile info, including the profile picture
+      const profilePicUrl = user?.user_metadata?.avatar_url;
+
+      if (profilePicUrl) {
+        // You can save the profile pic URL to the user data in the Supabase database
+        const { error: updateError } = await supabase
+          .from("users")
+          .update({ profile_pic: profilePicUrl })
+          .eq("id", user.id);
+
+        if (updateError) {
+          console.error("Error updating profile picture:", updateError.message);
+        }
+      }
+    }
   };
 
   // Handle form input change
@@ -66,6 +75,17 @@ const Login = () => {
   const handleLogin = async () => {
     setFormError({}); // Reset previous errors
     try {
+      // validation schema
+      const schema = Yup.object().shape({
+        email: Yup.string()
+          .email("Invalid email format")
+          .required("Email is required"),
+        password: Yup.string()
+          .min(6, "Password must be at least 6 characters")
+          .matches(/[a-zA-Z]/, "Password must contain at least one letter")
+          .required("Password is required"),
+      });
+
       await schema.validate(formData, { abortEarly: false }); // Validate input
       await fn(); // Proceed with login using fetch
     } catch (e) {

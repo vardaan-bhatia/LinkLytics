@@ -5,27 +5,27 @@ import { Users, Link, Globe, Zap } from "lucide-react";
 const CardSection = () => {
   const cardItems = [
     {
-      title: "1.5M+ Daily Users",
+      title: "Easy to Use",
       description:
-        "Join over 1.5 million users who trust LinkLytics every day for their link shortening and analytics needs.",
+        "No complicated steps. Just start shortening your links with a single click.",
       icon: <Users className="w-6 h-6 text-blue-400" />,
     },
     {
-      title: "5B+ Links Shortened",
+      title: "Fast Link Creation",
       description:
-        "We've shortened over 5 billion links, helping businesses and individuals optimize their online presence.",
+        "Shorten any URL quickly and share it with your friends or team instantly.",
       icon: <Link className="w-6 h-6 text-pink-400" />,
     },
     {
-      title: "200+ Countries Reached",
+      title: "Global Access",
       description:
-        "Our global network ensures your shortened links are accessible and fast-loading worldwide.",
+        "Your links work anywhere, anytime, ensuring everyone can reach your content.",
       icon: <Globe className="w-6 h-6 text-purple-400" />,
     },
     {
-      title: "99.99% Uptime",
+      title: "Always Online",
       description:
-        "Rely on our robust infrastructure for uninterrupted service and lightning-fast redirects.",
+        "Your links are live 24/7, so they’re always available whenever someone clicks.",
       icon: <Zap className="w-6 h-6 text-yellow-400" />,
     },
   ];

@@ -70,7 +70,9 @@ const Hero = () => {
       {/* Centering CardSection and Accordion */}
       <div className="flex flex-col items-center w-full mt-20 mb-20 px-4">
         <CardSection />
-        <h1 className="text-2xl font-bold mb-4">Frequently Asked Questions</h1>
+        <h1 className="text-lg text-center md:text-xl lg:text-2xl font-bold mb-4">
+          Frequently Asked Questions
+        </h1>
         <Accordion />
       </div>
     </div>

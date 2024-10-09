@@ -19,30 +19,16 @@ import { signup } from "@/db/apiAuth";
 import { urlState } from "@/UserContext";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-// validation schema
-const schema = Yup.object().shape({
-  name: Yup.string().required("Name is required"),
-  email: Yup.string()
-    .email("Invalid email format")
-    .required("Email is required"),
-  password: Yup.string()
-    .min(6, "Password must be at least 6 characters")
-    .matches(/[a-zA-Z]/, "Password must contain at least one letter")
-    .required("Password is required"),
-  display_pic: Yup.mixed().required("Profile picture is required"),
-});
-
 const Signup = () => {
   // State for form data and error handling
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    display_pic: null,
+    profile_pic: null,
   });
   const [formError, setFormError] = useState({});
   const { data, loading, error, fn } = useFetch(signup, formData);
-  const { fetchUser } = urlState();
   const [searchParams] = useSearchParams();
   const createlink = searchParams.get("createNew");
   const navigate = useNavigate();
@@ -88,16 +74,33 @@ const Signup = () => {
 
   // Handle signup functionality
   const handleSignup = async () => {
-    setFormError({}); // Reset previous errors
+    setFormError([]); // Reset previous errors
     try {
+      // validation schema
+      const schema = Yup.object().shape({
+        name: Yup.string().required("Name is required"),
+        email: Yup.string()
+          .email("Invalid email format")
+          .required("Email is required"),
+        password: Yup.string()
+          .min(6, "Password must be at least 6 characters")
+          .matches(/[a-zA-Z]/, "Password must contain at least one letter")
+          .required("Password is required"),
+        profile_pic: Yup.mixed().required("Profile picture is required"),
+      });
+
       await schema.validate(formData, { abortEarly: false }); // Validate input
       await fn(); // Proceed with signup using fetch
     } catch (e) {
-      const newErrors = {}; // Initialize a new errors object
-      e.inner.forEach((err) => {
-        newErrors[err.path] = err.message; // Collect validation errors
-      });
-      setFormError(newErrors); // Update state with new errors
+      const newErrors = {};
+      if (e?.inner) {
+        e.inner.forEach((err) => {
+          newErrors[err.path] = err.message; // Collect validation errors
+        });
+        setFormError(newErrors);
+      } else {
+        setErrors({ api: error.message });
+      }
     }
   };
 
@@ -119,16 +122,15 @@ const Signup = () => {
         <CardDescription className="text-center">
           Create your account to start shortening links
         </CardDescription>
+        {error && <Error message={error.message} />}
       </CardHeader>
       <CardContent>
-        {error && <Error message={error.message} />}
-        <div className="flex flex-col space-y-6" onKeyPress={handleKey}>
+        <div className="flex flex-col space-y-4" onKeyPress={handleKey}>
           <Input
             name="name"
             type="text"
             placeholder="Enter your name"
             className="p-2"
-            value={formData.name}
             onChange={handleChange}
           />
           {formError.name && <Error message={formError.name} />}
@@ -137,7 +139,6 @@ const Signup = () => {
             type="email"
             placeholder="Email"
             className="p-2"
-            value={formData.email}
             onChange={handleChange}
           />
           {formError.email && <Error message={formError.email} />}
@@ -146,18 +147,17 @@ const Signup = () => {
             type="password"
             placeholder="Password"
             className="p-2"
-            value={formData.password}
             onChange={handleChange}
           />
           {formError.password && <Error message={formError.password} />}
           <Input
-            name="display_pic"
+            name="profile_pic"
             type="file"
             className="p-2"
             accept="image/*"
             onChange={handleChange}
           />
-          {formError.display_pic && <Error message={formError.display_pic} />}
+          {formError.profile_pic && <Error message={formError.profile_pic} />}
         </div>
       </CardContent>
       <CardFooter className="flex flex-col">

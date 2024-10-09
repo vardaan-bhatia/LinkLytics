@@ -9,7 +9,7 @@ import {
 const Accordion = () => {
   return (
     <div className="w-full mx-auto mt-8">
-      <UIAccordion type="multiple" collapsible>
+      <UIAccordion type="multiple">
         <AccordionItem value="item-1">
           <AccordionTrigger className="p-4 bg-gray-800 text-white rounded-md hover:bg-gray-700 text-left">
             How does LinkLytics provide analytics?
@@ -50,7 +50,7 @@ const Accordion = () => {
           </AccordionTrigger>
           <AccordionContent className="p-4 bg-gray-900 text-gray-300 rounded-md mt-2">
             With LinkLytics, you can create shortened URLs instantly. Just input
-            your long link, click a button, and you’ll have a shortened link
+            your long link, click a button, and you'll have a shortened link
             ready to share in seconds.
           </AccordionContent>
         </AccordionItem>

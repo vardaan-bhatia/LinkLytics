@@ -13,14 +13,20 @@ import { urlState } from "@/UserContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link2Icon, LogOut } from "lucide-react";
 import { logOut } from "@/db/apiAuth";
+import useFetch from "@/Hooks/useFetch";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { user } = urlState();
+  const { user, fetchUser } = urlState();
 
-  const handleLogout = () => {
-    logOut();
+  const { loading, fn } = useFetch(logOut);
+
+  const handleLogout = async () => {
+    await fn(); //fn() completes
+    await fetchUser(); // This will fetch the user from the session from contextApi
+    navigate("/"); // Only navigate after fn() has resolved
   };
+
   return (
     <nav className="py-6 flex justify-between items-center flex-wrap">
       <Link to="/">
@@ -40,12 +46,12 @@ const Header = () => {
           <DropdownMenu>
             <DropdownMenuTrigger className="w-10 rounded-full overflow-hidden">
               <Avatar>
-                <AvatarImage src={user?.user_metadata?.display_pic} />
-                <AvatarFallback>{user.name}</AvatarFallback>
+                <AvatarImage src={user?.user_metadata?.profile_pic} />
+                <AvatarFallback>{user?.user_metadata?.name}</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuLabel>{user.name}</DropdownMenuLabel>
+              <DropdownMenuLabel>{user?.user_metadata?.name}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <Link2Icon className="mr-2 h-4 w-4" />
