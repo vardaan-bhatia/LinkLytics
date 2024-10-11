@@ -64,8 +64,10 @@ const Header = () => {
               <DropdownMenuLabel>{user?.user_metadata?.name}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <Link2Icon className="mr-2 h-4 w-4" />
-                <span>My Links</span>
+                <Link to="/dashboard" className="flex">
+                  <Link2Icon className="mr-2 h-4 w-4" />
+                  My Links
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem className="text-red-500">
                 <LogOut className="mr-2 h-4 w-4" />
@@ -76,7 +78,7 @@ const Header = () => {
         ) : (
           <Button
             onClick={() => navigate("/auth")}
-            className="hover:bg-blue-400 hover:text-white"
+            className="bg-blue-600 hover:bg-blue-500 text-white"
           >
             Login
           </Button>
