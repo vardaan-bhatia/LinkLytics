@@ -57,7 +57,9 @@ const Header = () => {
                     user?.user_metadata?.avatar_url
                   }
                 />
-                <AvatarFallback>{user?.user_metadata?.name}</AvatarFallback>
+                <AvatarFallback>
+                  {user?.user_metadata?.name?.charAt(0).toUpperCase()}
+                </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
@@ -71,14 +73,16 @@ const Header = () => {
               </DropdownMenuItem>
               <DropdownMenuItem className="text-red-500">
                 <LogOut className="mr-2 h-4 w-4" />
-                <span onClick={handleLogout}>Logout</span>
+                <span onClick={handleLogout} className="cursor-pointer">
+                  Logout
+                </span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
           <Button
             onClick={() => navigate("/auth")}
-            className="bg-blue-600 hover:bg-blue-500 text-white"
+            className="bg-blue-500 hover:bg-blue-400 text-white"
           >
             Login
           </Button>

@@ -15,7 +15,7 @@ const Footer = () => {
 
         <p className="text-sm font-light mb-2">
           A product by{" "}
-          <span className="text-customBlue font-medium">
+          <span className="text-blue-500 font-medium">
             <a
               href="https://www.linkedin.com/in/vardaan-bhatia-028446203/"
               className="hover:underline"
@@ -34,7 +34,7 @@ const Footer = () => {
             <FontAwesomeIcon
               icon={faTwitter}
               size="2x"
-              className="text-customBlue hover:text-white transition"
+              className="text-blue-500 hover:text-white transition"
             />
           </a>
           <a
@@ -45,7 +45,7 @@ const Footer = () => {
             <FontAwesomeIcon
               icon={faLinkedin}
               size="2x"
-              className="text-customBlue hover:text-white transition"
+              className="text-blue-500 hover:text-white transition"
             />
           </a>
           <a
@@ -56,7 +56,7 @@ const Footer = () => {
             <FontAwesomeIcon
               icon={faGithub}
               size="2x"
-              className="text-customBlue hover:text-white transition"
+              className="text-blue-500 hover:text-white transition"
             />
           </a>
           <a
@@ -67,7 +67,7 @@ const Footer = () => {
             <FontAwesomeIcon
               icon={faMedium}
               size="2x"
-              className="text-customBlue hover:text-white transition"
+              className="text-blue-500 hover:text-white transition"
             />
           </a>
         </div>

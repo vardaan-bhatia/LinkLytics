@@ -40,7 +40,7 @@ const Dashboard = () => {
   }, [urlData?.length]);
 
   const filteredUrls = urlData?.filter((url) =>
-    url?.Title?.toLowerCase().includes(searchKey.toLowerCase())
+    url?.title?.toLowerCase().includes(searchKey.toLowerCase())
   );
 
   return (
@@ -74,7 +74,7 @@ const Dashboard = () => {
       {/* Links Section */}
       <div className="flex justify-between items-center mt-6">
         <h1 className="text-3xl font-bold">My Links</h1>
-        <Button className="bg-blue-600 hover:bg-blue-500 text-white">
+        <Button className="bg-blue-500 hover:bg-blue-400 text-white">
           Create Link
         </Button>
       </div>
@@ -95,7 +95,7 @@ const Dashboard = () => {
       {urlError && <Error message={urlError?.message} />}
 
       {/* URL Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+      <div>
         {filteredUrls?.length ? (
           filteredUrls.map((url, index) => <UrlCard key={index} url={url} />)
         ) : (

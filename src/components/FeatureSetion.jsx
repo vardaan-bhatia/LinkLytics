@@ -26,7 +26,7 @@ const features = [
 
 const FeatureItem = ({ Icon, title, description }) => (
   <div className="flex flex-col items-center text-center px-8">
-    <Icon className="w-12 h-12 mb-2 text-blue-400" />
+    <Icon className="w-12 h-12 mb-2 text-blue-500" />
     <h3 className="text-lg font-semibold mb-1 text-white">{title}</h3>
     <p className="text-sm text-gray-400">{description}</p>
   </div>
