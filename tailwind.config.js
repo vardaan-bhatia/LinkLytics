@@ -8,6 +8,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontSize: {
+        customText: "5px", // Custom text size (10px)
+      },
       fontFamily: {
         inter: ["Inter", "sans-serif"],
       },
