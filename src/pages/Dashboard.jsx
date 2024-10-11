@@ -97,7 +97,9 @@ const Dashboard = () => {
       {/* URL Cards */}
       <div>
         {filteredUrls?.length ? (
-          filteredUrls.map((url, index) => <UrlCard key={index} url={url} />)
+          filteredUrls.map((url, index) => (
+            <UrlCard key={index} url={url} fetchurl={fetchUrls} />
+          ))
         ) : (
           <p className="text-gray-500">No URLs found</p>
         )}
