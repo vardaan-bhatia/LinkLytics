@@ -1,58 +1,51 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Copy, Download, Trash } from "lucide-react";
 import { Button } from "./ui/button";
+import { Copy, Download, Trash } from "lucide-react";
 
 const UrlCard = ({ url }) => {
   return (
-    <div className="bg-gray-900 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col sm:flex-row justify-between items-center border border-gray-700 gap-6">
-      {/* Left - QR Code */}
-      <div className="flex-shrink-0">
+    <div className="flex flex-col gap-5 md:flex-row bg-gray-900 p-4 rounded-lg border">
+      {/* image div */}
+      <div>
+        {" "}
         <img
           src={url?.qr}
           alt="qr-code"
-          className="h-32 w-32 object-cover rounded-lg ring-2 ring-blue-500"
+          className="h-32 w-32 object-contain ring ring-blue-500"
         />
       </div>
-
-      {/* Middle - URL Information */}
-      <div className="flex-grow flex flex-col justify-center w-full sm:w-auto">
-        {/* URL Title */}
-        <div className="text-lg sm:text-xl md:text-2xl font-bold text-white truncate">
-          {url?.title}
-        </div>
-
-        {/* Shortened/Custom URL */}
-        <Link
-          to={`/url/${url?.id}`}
-          className="text-blue-400 text-sm sm:text-base md:text-lg font-semibold  hover:underline break-all"
-        >
+      {/* link div */}
+      <div className="flex flex-col">
+        <Link className="">
+          <span className="font-extrabold hover:underline text-3xl">
+            {url?.title}
+          </span>
+        </Link>
+        <span className="text-blue-500 font-bold text-2xl hover:underline">
           {`https://linklytics.in/${
             url?.short_url ? url?.short_url : url?.custom_url
           }`}
-        </Link>
-
-        {/* Original URL */}
-        <div className="text-gray-400 text-xs sm:text-sm md:text-base truncate  ">
-          {url?.original_url}
-        </div>
-
-        {/* Creation Date */}
-        <div className="text-gray-500 text-xs sm:text-sm mt-4">
-          {new Date(url?.created_at).toLocaleString()}
-        </div>
+        </span>
+        <span className="text-gray-400 text-xs">{url?.original_url}</span>
+        <span>
+          <span className=" text-gray-500 text-sm">
+            {new Date(url?.created_at).toLocaleString()}
+          </span>
+        </span>
       </div>
 
-      {/* Right - Vertical Buttons */}
-      <div className="flex flex-col gap-1 justify-between h-full">
+      {/* button div */}
+
+      <div className="flex flex-col justify-between">
         <Button variant="ghost">
-          <Copy className="w-5 h-5" />
+          <Copy />
         </Button>
         <Button variant="ghost">
-          <Download className="w-5 h-5" />
+          <Download />
         </Button>
         <Button variant="ghost">
-          <Trash className="w-5 h-5" />
+          <Trash />
         </Button>
       </div>
     </div>
