@@ -10,6 +10,8 @@ import { getClicks } from "@/db/apiClicks";
 import { urlState } from "@/UserContext";
 import Error from "@/components/Error";
 import UrlCard from "@/components/UrlCard";
+import createUrl from "../components/CreateUrl";
+import CreateUrl from "../components/CreateUrl";
 
 const Dashboard = () => {
   const [searchKey, setSearchKey] = useState("");
@@ -74,9 +76,7 @@ const Dashboard = () => {
       {/* Links Section */}
       <div className="flex justify-between items-center mt-6">
         <h1 className="text-3xl font-bold">My Links</h1>
-        <Button className="bg-blue-500 hover:bg-blue-400 text-white">
-          Create Link
-        </Button>
+        <CreateUrl />
       </div>
 
       {/* Search Filter */}
@@ -88,7 +88,7 @@ const Dashboard = () => {
           onChange={(e) => setSearchKey(e.target.value)}
           className="pr-10"
         />
-        <Filter className="absolute top-2 right-3 text-gray-500" />
+        <Filter className="absolute top-2 right-6 text-gray-500" />
       </div>
 
       {/* Error Display */}
