@@ -101,7 +101,7 @@ const Login = () => {
       <CardContent>
         {error && <Error message={error.message} />}{" "}
         {/* Display error message if any */}
-        <div className="flex flex-col space-y-6" onKeyPress={handleKey}>
+        <div className="flex flex-col space-y-6" onKeyDown={handleKey}>
           <Input
             name="email"
             type="email"

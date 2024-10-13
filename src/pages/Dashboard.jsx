@@ -98,7 +98,7 @@ const Dashboard = () => {
       {urlError && <Error message={urlError?.message} />}
 
       {/* URL Cards */}
-      <div>
+      <div className="space-y-4">
         {filteredUrls?.length ? (
           filteredUrls.map((url, index) => (
             <UrlCard key={index} url={url} fetchurl={fetchUrls} /> // Render a card for each URL

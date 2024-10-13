@@ -59,3 +59,17 @@ export async function createUrl(
 
   return data; // Return the created URL data
 }
+
+// get long urls
+
+export const longUrls = async (id) => {
+  const { data, error } = await supabase
+    .from("urls")
+    .select("id,original_url")
+    .or(`short_url.eq.${id},custom_url.eq.${id}`)
+    .single(); // Delete the URL with the given ID
+
+  if (error) throw new Error(error.message); // Handle any errors
+
+  return data; // Return the deleted data
+};
