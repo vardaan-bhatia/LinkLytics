@@ -1,5 +1,6 @@
 import React from "react";
 
+// Error component to display error messages
 const Error = ({ message }) => {
   return (
     <div>

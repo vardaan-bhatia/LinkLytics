@@ -18,17 +18,17 @@ import { BarLoader } from "react-spinners";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { user, fetchUser } = urlState();
+  const { user, fetchUser } = urlState(); // Get user data and fetch function from context
 
-  const { loading, fn } = useFetch(logOut);
+  const { loading, fn } = useFetch(logOut); // Fetch function for logging out
 
   const handleLogout = async () => {
     try {
       await fn(); // Complete logout
       await fetchUser(); // Fetch updated user state
-      navigate("/"); // Navigate after fetching user data
+      navigate("/"); // Navigate to the home page after logout
     } catch (error) {
-      console.error("Logout failed", error); // Handle error appropriately
+      console.error("Logout failed", error); // Handle logout error
     }
   };
 
@@ -47,7 +47,7 @@ const Header = () => {
         </h1>
       </Link>
       <div className="flex items-center space-x-4">
-        {user ? (
+        {user ? ( // Check if user is logged in
           <DropdownMenu>
             <DropdownMenuTrigger className="w-10 rounded-full overflow-hidden">
               <Avatar>
@@ -58,7 +58,8 @@ const Header = () => {
                   }
                 />
                 <AvatarFallback>
-                  {user?.user_metadata?.name?.charAt(0).toUpperCase()}
+                  {user?.user_metadata?.name?.charAt(0).toUpperCase()} //
+                  Display user's initial if profile pic is not available
                 </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
@@ -88,7 +89,7 @@ const Header = () => {
           </Button>
         )}
       </div>
-      {loading && (
+      {loading && ( // Show loading spinner while logging out
         <div
           className="w-full mt-4 "
           style={{
@@ -97,7 +98,7 @@ const Header = () => {
         >
           <BarLoader width={"100%"} color="#ffffff" />
         </div>
-      )}{" "}
+      )}
     </nav>
   );
 };

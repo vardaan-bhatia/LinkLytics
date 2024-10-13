@@ -1,33 +1,31 @@
 import supabase, { supabaseUrl } from "./supabase";
 
-// login api
+// Login API
 export const login = async ({ email, password }) => {
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
-  if (error) throw new Error(error.message);
+  if (error) throw new Error(error.message); // Handle login error
 
-  return data;
+  return data; // Return user data
 };
 
-// logOut
+// Log out
 export const logOut = async () => {
   const { error } = await supabase.auth.signOut();
-  if (error) {
-    throw new Error(error.message);
-  }
+  if (error) throw new Error(error.message); // Handle logout error
 };
 
-// get current user from the local state
+// Get current user from local state
 export const getCurrentUser = async () => {
   const { data, error } = await supabase.auth.getSession();
-  if (error) throw new Error(error.message); // Handle error
-  if (!data.session) return null; // If no session, return null
-  return data.session?.user; // Return the user if session exists
+  if (error) throw new Error(error.message); // Handle session error
+  if (!data.session) return null; // Return null if no session
+  return data.session?.user; // Return user if session exists
 };
 
-// SignUp Api
+// SignUp API
 export const signup = async ({ name, email, password, profile_pic }) => {
   const fileName = `dp-${name.split(" ").join("-")}-${Math.random()}`;
 
@@ -35,7 +33,7 @@ export const signup = async ({ name, email, password, profile_pic }) => {
     .from("profile_pic")
     .upload(fileName, profile_pic);
 
-  if (storageError) throw new Error(storageError.message);
+  if (storageError) throw new Error(storageError.message); // Handle storage error
 
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -43,21 +41,21 @@ export const signup = async ({ name, email, password, profile_pic }) => {
     options: {
       data: {
         name,
-        profile_pic: `${supabaseUrl}/storage/v1/object/public/profile_pic/${fileName}`,
+        profile_pic: `${supabaseUrl}/storage/v1/object/public/profile_pic/${fileName}`, // Public URL for profile pic
       },
     },
   });
 
-  if (error) throw new Error(error.message);
+  if (error) throw new Error(error.message); // Handle signup error
 
-  return data;
+  return data; // Return user data
 };
 
-// Google signin with redirect handling
+// Google sign-in with redirect handling
 export const googleLogin = async () => {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
   });
-  if (error) throw new Error(error.message);
-  return data;
+  if (error) throw new Error(error.message); // Handle Google login error
+  return data; // Return user data
 };

@@ -2,59 +2,62 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Check, Copy, Download, Trash } from "lucide-react";
-import useFetch from "@/Hooks/useFetch";
-import { deleteUrls } from "@/db/apiUrls";
-import { BeatLoader } from "react-spinners";
+import useFetch from "@/Hooks/useFetch"; // Custom hook for API fetching
+import { deleteUrls } from "@/db/apiUrls"; // API function to delete URLs
+import { BeatLoader } from "react-spinners"; // Loader component for async actions
 
 const UrlCard = ({ url = {}, fetchurl }) => {
-  const [copyLink, setCopyLink] = useState(false);
+  const [copyLink, setCopyLink] = useState(false); // State to manage link copying status
 
-  const urlimage = url?.qr;
-  const downloadName = url?.title;
+  const urlimage = url?.qr; // QR code image URL
+  const downloadName = url?.title; // Title for the downloaded image
 
+  // Function to download the QR code image
   const handleDownloadImage = async () => {
     try {
       const response = await fetch(urlimage); // Fetch the image
       const blob = await response.blob(); // Get the blob from the response
-      const link = document.createElement("a");
+      const link = document.createElement("a"); // Create a link element
       link.href = URL.createObjectURL(blob); // Create a URL for the blob
       link.setAttribute("download", `${downloadName}.png`); // Set the download attribute
-      document.body.appendChild(link);
+      document.body.appendChild(link); // Append link to the body
       link.click(); // Trigger the download
-      document.body.removeChild(link); // Clean up
+      document.body.removeChild(link); // Clean up by removing the link
     } catch (error) {
-      console.error("Error downloading the image:", error);
+      console.error("Error downloading the image:", error); // Log any errors during download
     }
   };
 
+  // Function to copy the short URL to clipboard
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(`https://linklytics.in/${url?.short_url}`);
-    setCopyLink(true);
+    navigator.clipboard.writeText(`https://linklytics.in/${url?.short_url}`); // Copy URL to clipboard
+    setCopyLink(true); // Set copy status to true
     setTimeout(() => {
-      setCopyLink(false);
+      setCopyLink(false); // Reset copy status after 3 seconds
     }, 3000);
   };
 
   const { loading: deleteLoading, fn: fnDelete } = useFetch(
     deleteUrls,
-    url?.id
+    url?.id // Get the function to delete URL
   );
 
+  // Function to handle deletion of URL
   const handleDelete = async () => {
-    await fnDelete();
-    await fetchurl();
+    await fnDelete(); // Execute delete function
+    await fetchurl(); // Fetch updated URL list after deletion
   };
 
   return (
     <div className="flex flex-col gap-5 md:flex-row bg-gray-900 p-4 rounded-lg border items-center justify-between md:justify-start overflow-hidden">
-      {/* Image div */}
+      {/* Image div displaying the QR code */}
       <img
         src={url?.qr}
         alt="qr-code"
         className="h-24 w-24 sm:h-32 sm:w-32 object-contain ring ring-blue-500"
       />
 
-      {/* Link div */}
+      {/* Link div displaying URL information */}
       <div className="flex flex-col text-center md:text-left flex-grow md:w-2/3">
         <Link to={`/link/${url?.id}`}>
           <span className="font-bold hover:underline text-3xl text-center sm:text-left md:text-3xl ">
@@ -69,23 +72,26 @@ const UrlCard = ({ url = {}, fetchurl }) => {
           </span>
         </Link>
         <span className="text-gray-300 text-xs sm:text-lg mb-2 overflow-hidden">
-          {url?.original_url}
+          {url?.original_url} {/* Display original URL */}
         </span>
         <span className="text-gray-400 text-base font-mono">
-          {new Date(url?.created_at).toLocaleString()}
+          {new Date(url?.created_at).toLocaleString()}{" "}
+          {/* Display creation date */}
         </span>
       </div>
 
-      {/* Button div */}
+      {/* Button div for actions */}
       <div className="flex flex-row sm:flex-col justify-between h-full md:ml-4">
         <Button variant="ghost" onClick={handleCopyLink}>
-          {copyLink ? <Check /> : <Copy />}
+          {copyLink ? <Check /> : <Copy />}{" "}
+          {/* Display check icon if link copied */}
         </Button>
         <Button variant="ghost" onClick={handleDownloadImage}>
-          <Download />
+          <Download /> {/* Download button */}
         </Button>
         <Button variant="ghost" onClick={handleDelete}>
-          {deleteLoading ? <BeatLoader size={5} color="white" /> : <Trash />}
+          {deleteLoading ? <BeatLoader size={5} color="white" /> : <Trash />}{" "}
+          {/* Show loader or trash icon */}
         </Button>
       </div>
     </div>

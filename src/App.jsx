@@ -5,16 +5,20 @@ import Dashboard from "./pages/dashboard";
 import Hero from "./pages/Hero";
 import Link from "./pages/link";
 import RedirectLink from "./pages/redirectLink";
-import AppLayout from "./appLayout"; // Contains nav and header
+import AppLayout from "./appLayout"; // Layout with navigation and header
 import ProtectedRoute from "./components/ProtectedRoute";
 
+// Main App component for routing
 const App = () => {
   return (
     <Router>
       <AppLayout>
         <Routes>
+          {/* Public routes */}
           <Route path="/" element={<Hero />} />
           <Route path="/auth" element={<Auth />} />
+
+          {/* Protected route for Link page */}
           <Route
             path="/link/:id"
             element={
@@ -23,7 +27,11 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+
+          {/* Redirect route */}
           <Route path="/:id" element={<RedirectLink />} />
+
+          {/* Protected route for Dashboard */}
           <Route
             path="/dashboard"
             element={

@@ -1,11 +1,11 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import FontAwesomeIcon for social media icons
 import {
   faTwitter,
   faLinkedin,
   faGithub,
   faMedium,
-} from "@fortawesome/free-brands-svg-icons";
+} from "@fortawesome/free-brands-svg-icons"; // Import specific brand icons
 
 const Footer = () => {
   return (
@@ -25,6 +25,7 @@ const Footer = () => {
           </span>
         </p>
 
+        {/* Social media icons */}
         <div className="flex justify-center mt-6 space-x-6">
           <a
             href="https://x.com/vardaanbhatia__"
@@ -80,7 +81,8 @@ const Footer = () => {
           insights.
         </p>
         <p className="text-sm mt-2">
-          &copy; {new Date().getFullYear()} LinkLytics. All rights reserved.
+          &copy; {new Date().getFullYear()} LinkLytics. All rights reserved.{" "}
+          {/* Display current year */}
         </p>
       </div>
     </div>

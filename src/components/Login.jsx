@@ -22,51 +22,52 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 const Login = () => {
   // State for form data and error handling
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const [formError, setFormError] = useState({});
-  const { data, loading, error, fn } = useFetch(login, formData);
-  const { fetchUser } = urlState();
-  const [searchParams] = useSearchParams();
-  const createlink = searchParams.get("createNew");
-  const navigate = useNavigate();
+  const [formError, setFormError] = useState({}); // Store form validation errors
+  const { data, loading, error, fn } = useFetch(login, formData); // Custom hook for handling login fetch
+  const { fetchUser } = urlState(); // Function to fetch user details from context
+  const [searchParams] = useSearchParams(); // Get search parameters from URL
+  const createlink = searchParams.get("createNew"); // Check if 'createNew' parameter is present
+  const navigate = useNavigate(); // Hook to programmatically navigate
 
-  // Effect to handle user fetching
+  // Effect to handle user fetching after successful login
   useEffect(() => {
     if (error == null && data) {
-      fetchUser();
-      navigate(`/dashboard?${createlink ? `createNew=${createlink}` : ""}`); // Fetch user details after successful login
+      fetchUser(); // Fetch user details after successful login
+      navigate(`/dashboard?${createlink ? `createNew=${createlink}` : ""}`); // Redirect to dashboard
     }
   }, [data, fetchUser, navigate]);
 
   const handleGoogleLogin = async () => {
     try {
-      await googleLogin();
+      await googleLogin(); // Attempt Google login
     } catch (error) {
       console.error("Google login error:", error);
-      setFormError({ api: "Failed to login with Google. Please try again." });
+      setFormError({ api: "Failed to login with Google. Please try again." }); // Set API error message
     }
   };
+
   // Handle form input change
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({ ...formData, [name]: value }); // Update form data state
   };
 
   // Handle login functionality
   const handleLogin = async () => {
     setFormError({}); // Reset previous errors
     try {
-      // validation schema
+      // Validation schema
       const schema = Yup.object().shape({
         email: Yup.string()
-          .email("Invalid email format")
-          .required("Email is required"),
+          .email("Invalid email format") // Validate email format
+          .required("Email is required"), // Email must be provided
         password: Yup.string()
-          .min(6, "Password must be at least 6 characters")
-          .matches(/[a-zA-Z]/, "Password must contain at least one letter")
-          .required("Password is required"),
+          .min(6, "Password must be at least 6 characters") // Validate password length
+          .matches(/[a-zA-Z]/, "Password must contain at least one letter") // Ensure password contains a letter
+          .required("Password is required"), // Password must be provided
       });
 
-      await schema.validate(formData, { abortEarly: false }); // Validate input
+      await schema.validate(formData, { abortEarly: false }); // Validate input using Yup
       await fn(); // Proceed with login using fetch
     } catch (e) {
       const newErrors = {}; // Initialize a new errors object
@@ -77,6 +78,7 @@ const Login = () => {
     }
   };
 
+  // Handle Enter key press for login
   const handleKey = (e) => {
     if (e.key === "Enter") {
       handleLogin(); // Trigger login on Enter key press
@@ -98,6 +100,7 @@ const Login = () => {
       </CardHeader>
       <CardContent>
         {error && <Error message={error.message} />}{" "}
+        {/* Display error message if any */}
         <div className="flex flex-col space-y-6" onKeyPress={handleKey}>
           <Input
             name="email"
@@ -105,7 +108,7 @@ const Login = () => {
             placeholder="Email"
             className="p-2"
             value={formData.email}
-            onChange={handleChange}
+            onChange={handleChange} // Handle input change
           />
           {formError.email && <Error message={formError.email} />}{" "}
           {/* Email-specific error */}
@@ -115,7 +118,7 @@ const Login = () => {
             placeholder="Password"
             className="p-2"
             value={formData.password}
-            onChange={handleChange}
+            onChange={handleChange} // Handle input change
           />
           {formError.password && <Error message={formError.password} />}{" "}
           {/* Password-specific error */}

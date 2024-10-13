@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BarLoader } from "react-spinners";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Filter } from "lucide-react";
 import useFetch from "@/Hooks/useFetch";
@@ -10,13 +9,14 @@ import { getClicks } from "@/db/apiClicks";
 import { urlState } from "@/UserContext";
 import Error from "@/components/Error";
 import UrlCard from "@/components/UrlCard";
-import createUrl from "../components/CreateUrl";
 import CreateUrl from "../components/CreateUrl";
 
+// Main Dashboard component
 const Dashboard = () => {
-  const [searchKey, setSearchKey] = useState("");
-  const { user } = urlState();
+  const [searchKey, setSearchKey] = useState(""); // Search input state
+  const { user } = urlState(); // Access user state
 
+  // Fetch URLs based on user ID
   const {
     data: urlData,
     error: urlError,
@@ -24,29 +24,32 @@ const Dashboard = () => {
     fn: fetchUrls,
   } = useFetch(getUrls, user?.id);
 
+  // Fetch clicks data for the fetched URLs
   const {
     data: clickData,
     loading: clickLoading,
     fn: fetchClicks,
   } = useFetch(
     getClicks,
-    urlData?.map((url) => url.id)
+    urlData?.map((url) => url.id) // Pass URL IDs for fetching click data
   );
 
   useEffect(() => {
-    fetchUrls();
+    fetchUrls(); // Fetch URLs on component mount
   }, []);
 
   useEffect(() => {
-    if (urlData?.length) fetchClicks();
+    if (urlData?.length) fetchClicks(); // Fetch clicks once URLs are loaded
   }, [urlData?.length]);
 
+  // Filter URLs based on the search input
   const filteredUrls = urlData?.filter((url) =>
     url?.title?.toLowerCase().includes(searchKey.toLowerCase())
   );
 
   return (
     <div className="flex flex-col gap-6 p-4">
+      {/* Loading spinner */}
       {urlLoading && clickLoading && (
         <div className="flex justify-center mt-4">
           <BarLoader width={"100%"} color="#ffffff" />
@@ -54,7 +57,7 @@ const Dashboard = () => {
       )}
 
       {/* Statistics Cards */}
-      <div className="grid grid-cols-2 gap-4  ">
+      <div className="grid grid-cols-2 gap-4">
         <Card className="shadow-lg">
           <CardHeader>
             <CardTitle>Links Created</CardTitle>
@@ -76,7 +79,7 @@ const Dashboard = () => {
       {/* Links Section */}
       <div className="flex justify-between items-center mt-6">
         <h1 className="text-3xl font-bold">My Links</h1>
-        <CreateUrl />
+        <CreateUrl /> {/* Button to create a new short URL */}
       </div>
 
       {/* Search Filter */}
@@ -85,7 +88,7 @@ const Dashboard = () => {
           type="text"
           placeholder="Filter Links by Title..."
           value={searchKey}
-          onChange={(e) => setSearchKey(e.target.value)}
+          onChange={(e) => setSearchKey(e.target.value)} // Update search state
           className="pr-10"
         />
         <Filter className="absolute top-2 right-6 text-gray-500" />
@@ -98,10 +101,10 @@ const Dashboard = () => {
       <div>
         {filteredUrls?.length ? (
           filteredUrls.map((url, index) => (
-            <UrlCard key={index} url={url} fetchurl={fetchUrls} />
+            <UrlCard key={index} url={url} fetchurl={fetchUrls} /> // Render a card for each URL
           ))
         ) : (
-          <p className="text-gray-500">No URLs found</p>
+          <p className="text-gray-500">No URLs found</p> // Display if no URLs match
         )}
       </div>
     </div>
