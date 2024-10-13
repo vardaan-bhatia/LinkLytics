@@ -62,7 +62,7 @@ export async function createUrl(
 
 // get long urls
 
-export const longUrls = async (id) => {
+export const getlongUrl = async (id) => {
   const { data, error } = await supabase
     .from("urls")
     .select("id,original_url")
@@ -72,4 +72,22 @@ export const longUrls = async (id) => {
   if (error) throw new Error(error.message); // Handle any errors
 
   return data; // Return the deleted data
+};
+
+// single url for link page to show single url and the analytics
+
+export const getSingleUrl = async ({ id, user_id }) => {
+  const { data, error } = await supabase
+    .from("urls")
+    .select("*")
+    .eq("id", id)
+    .eq("user_id", user_id)
+    .single();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Short Url not found");
+  }
+
+  return data;
 };

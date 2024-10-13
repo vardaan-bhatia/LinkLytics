@@ -51,7 +51,12 @@ const Dashboard = () => {
     <div className="flex flex-col gap-6 p-4">
       {/* Loading spinner */}
       {urlLoading && clickLoading && (
-        <div className="flex justify-center mt-4">
+        <div
+          className="w-full mt-4 flex justify-center"
+          style={{
+            background: "linear-gradient(to right, #f64f59, #c471ed, #12c2e9)",
+          }}
+        >
           <BarLoader width={"100%"} color="#ffffff" />
         </div>
       )}
@@ -93,6 +98,9 @@ const Dashboard = () => {
         />
         <Filter className="absolute top-2 right-6 text-gray-500" />
       </div>
+      <h1 className="text-2xl font-bold  text-gray-500">
+        Click the Title to View Analytics
+      </h1>
 
       {/* Error Display */}
       {urlError && <Error message={urlError?.message} />}

@@ -27,7 +27,6 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-
           {/* Redirect route */}
           <Route path="/:id" element={<RedirectLink />} />
 

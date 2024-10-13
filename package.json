@@ -33,9 +33,11 @@
     "react-qrcode-logo": "^3.0.0",
     "react-router-dom": "^6.26.2",
     "react-spinners": "^0.14.1",
+    "recharts": "^2.13.0",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "type": "^2.7.3",
+    "ua-parser-js": "^1.0.39",
     "yup": "^1.4.0"
   },
   "devDependencies": {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Dialog,
   DialogContent,
@@ -9,7 +9,6 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "./ui/button";
-import { useState, useEffect, useRef } from "react";
 import { Input } from "./ui/input";
 import { urlState } from "@/UserContext";
 import { SyncLoader } from "react-spinners";
@@ -22,24 +21,26 @@ import { createUrl } from "@/db/apiUrls";
 import useFetch from "@/Hooks/useFetch";
 
 const CreateUrl = () => {
-  // Access user information from urlState context
+  // Retrieve user information from the urlState context
   const { user } = urlState();
-  // Retrieve query parameters from the URL
+
+  // Manage query parameters from the URL for pre-filling the form
   const [searchParams, setsearchParams] = useSearchParams();
   const longurl = searchParams.get("createNew");
   const navigate = useNavigate();
-  const ref = useRef();
+  const ref = useRef(); // Reference for QR code canvas
 
-  // Error handling state
+  // State for handling form errors
   const [error, seterror] = useState({});
-  // Form values state
+
+  // State for form values
   const [formValue, setformValue] = useState({
     title: "",
-    longUrl: longurl ? longurl : "", // Pre-populate long URL if available
+    longUrl: longurl || "", // Pre-populate long URL if available
     customUrl: "",
   });
 
-  // Define validation schema using Yup
+  // Define validation schema for the form using Yup
   const schema = Yup.object().shape({
     title: Yup.string().required("Title is required"),
     longUrl: Yup.string()
@@ -48,58 +49,65 @@ const CreateUrl = () => {
     customUrl: Yup.string(), // Custom URL is optional
   });
 
-  // Handle form input changes
+  // Handle changes in form inputs
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setformValue({
-      ...formValue, // Spread existing form values
-      [name]: value, // Update only the changed field
-    });
+    setformValue((prev) => ({
+      ...prev, // Retain previous form values
+      [name]: value, // Update the specific field being changed
+    }));
   };
+
+  // Fetch function for creating the URL
   const {
     loading,
     error: UrlError,
     data,
     fn: fnCreateUrl,
   } = useFetch(createUrl, { ...formValue, user_id: user.id });
+
+  // Navigate to the created link after a successful URL creation
   useEffect(() => {
-    if (UrlError == null && data) {
+    if (!UrlError && data) {
       navigate(`/link/${data[0].id}`);
     }
   }, [UrlError, data]);
 
-  // Handle form submission and validation
+  // Handle form submission with validation
   const handleSubmit = async () => {
-    seterror([]);
+    seterror([]); // Clear previous errors
     try {
-      // Validate form using Yup
+      // Validate form data against the defined schema
       await schema.validate(formValue, { abortEarly: false });
 
-      // Create QR code blob from canvas
+      // Generate a QR code blob from the canvas
       const canvas = ref.current.canvasRef.current;
       const blob = await new Promise((resolve) => canvas.toBlob(resolve));
 
       // Call the function to create the URL with the blob
       await fnCreateUrl(blob);
     } catch (e) {
-      const newerrors = {};
+      // Capture and set any validation errors
+      const newErrors = {};
       e.inner.forEach((err) => {
-        newerrors[err.path] = err.message;
+        newErrors[err.path] = err.message;
       });
-      seterror(newerrors);
+      seterror(newErrors);
     }
   };
 
+  // Trigger form submission on Enter key press
   const handleKey = (e) => {
     if (e.key === "Enter") {
-      handleSubmit(); // Trigger login on Enter key press
+      handleSubmit();
     }
   };
+
   return (
     <Dialog
-      defaultOpen={longurl}
-      onOpenChange={(res) => {
-        if (!res) setsearchParams({});
+      defaultOpen={!!longurl}
+      onOpenChange={(isOpen) => {
+        if (!isOpen) setsearchParams({}); // Clear search params on dialog close
       }}
     >
       <DialogTrigger asChild>
@@ -107,13 +115,13 @@ const CreateUrl = () => {
           Create Short Link
         </Button>
       </DialogTrigger>
-      <DialogContent aria-describedby={undefined}>
+      <DialogContent aria-describedby="dialog-description">
         {UrlError && <Error message={UrlError.message} />}
         <DialogHeader>
           <DialogTitle className="mb-2 text-xl text-center">
             {`Hey 👋, ${
               user?.user_metadata?.name.split(" ")[0]
-            } ! Welcome to LinkLytics. Let's create your short link.`}
+            }! Welcome to LinkLytics. Let's create your short link.`}
           </DialogTitle>
           <DialogDescription
             id="dialog-description"
