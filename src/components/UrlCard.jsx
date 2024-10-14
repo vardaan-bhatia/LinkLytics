@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
-import { Check, Copy, Download, Edit, Pencil, Trash } from "lucide-react";
+import { Check, Copy, Download, Edit, Trash } from "lucide-react";
 import useFetch from "@/Hooks/useFetch"; // Custom hook for API fetching
-import { deleteUrls } from "@/db/apiUrls"; // API function to delete URLs
+import { deleteUrls, updateUrls } from "@/db/apiUrls"; // Add updateUrls import
 import { BeatLoader } from "react-spinners"; // Loader component for async actions
+import EditUrl from "./EditUrl"; // Import the Edit URL component
 
 const UrlCard = ({ url = {}, fetchurl }) => {
   const [copyLink, setCopyLink] = useState(false); // State to manage link copying status
+  const [isEditOpen, setIsEditOpen] = useState(false); // State to manage edit dialog visibility
+  const [currentUrlData, setCurrentUrlData] = useState(url); // State for current URL data
 
   const urlimage = url?.qr; // QR code image URL
   const downloadName = url?.title; // Title for the downloaded image
@@ -46,6 +49,12 @@ const UrlCard = ({ url = {}, fetchurl }) => {
   const handleDelete = async () => {
     await fnDelete(); // Execute delete function
     await fetchurl(); // Fetch updated URL list after deletion
+  };
+
+  // Function to handle edit button click
+  const handleEdit = () => {
+    setCurrentUrlData(url); // Set the current URL data for editing
+    setIsEditOpen(true); // Open the edit dialog
   };
 
   return (
@@ -90,7 +99,7 @@ const UrlCard = ({ url = {}, fetchurl }) => {
           {copyLink ? <Check /> : <Copy />}{" "}
           {/* Display check icon if link copied */}
         </Button>{" "}
-        <Button variant="ghost">
+        <Button variant="ghost" onClick={handleEdit}>
           <Edit />
         </Button>
         <Button variant="ghost" onClick={handleDownloadImage}>
@@ -101,6 +110,15 @@ const UrlCard = ({ url = {}, fetchurl }) => {
           {/* Show loader or trash icon */}
         </Button>
       </div>
+
+      {/* Edit URL Dialog */}
+      {isEditOpen && (
+        <EditUrl
+          url={currentUrlData} // Pass current URL data
+          onClose={() => setIsEditOpen(false)} // Close dialog
+          fetchurl={fetchurl} // Function to refresh URLs
+        />
+      )}
     </div>
   );
 };

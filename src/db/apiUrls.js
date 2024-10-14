@@ -104,3 +104,19 @@ export const getSingleUrl = async ({ id, user_id }) => {
 
   return data;
 };
+
+// Update a specific URL by ID
+export const updateUrls = async ({ id, title, longUrl, customUrl }) => {
+  const { data, error } = await supabase
+    .from("urls")
+    .update({
+      title,
+      original_url: longUrl,
+      custom_url: customUrl,
+    })
+    .eq("id", id)
+    .select();
+
+  if (error) throw new Error(error.message); // Handle error
+  return data; // Return the updated data
+};
