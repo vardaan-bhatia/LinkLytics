@@ -134,7 +134,7 @@ const CreateUrl = () => {
               <QRCode
                 value={formValue.longUrl}
                 ref={ref}
-                logoImage="/public/clipimg.png"
+                logoImage="/vite.svg"
               />
             </div>
           )}
@@ -171,7 +171,11 @@ const CreateUrl = () => {
           {error.customUrl && <Error message={error.customUrl} />}
         </div>
         <DialogFooter>
-          <Button disabled={loading} className="w-full" onClick={handleSubmit}>
+          <Button
+            disabled={loading}
+            className="bg-blue-500 hover:bg-blue-400 text-white w-full"
+            onClick={handleSubmit}
+          >
             {loading ? (
               <SyncLoader size={10} color="white" />
             ) : (

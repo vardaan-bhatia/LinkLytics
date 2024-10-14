@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
-import { Check, Copy, Download, Trash } from "lucide-react";
+import { Check, Copy, Download, Edit, Pencil, Trash } from "lucide-react";
 import useFetch from "@/Hooks/useFetch"; // Custom hook for API fetching
 import { deleteUrls } from "@/db/apiUrls"; // API function to delete URLs
 import { BeatLoader } from "react-spinners"; // Loader component for async actions
@@ -39,7 +39,7 @@ const UrlCard = ({ url = {}, fetchurl }) => {
 
   const { loading: deleteLoading, fn: fnDelete } = useFetch(
     deleteUrls,
-    url?.id // Get the function to delete URL
+    { id: url?.id, short_url: url?.short_url } // Pass the id and short_url as options
   );
 
   // Function to handle deletion of URL
@@ -89,6 +89,9 @@ const UrlCard = ({ url = {}, fetchurl }) => {
         <Button variant="ghost" onClick={handleCopyLink}>
           {copyLink ? <Check /> : <Copy />}{" "}
           {/* Display check icon if link copied */}
+        </Button>{" "}
+        <Button variant="ghost">
+          <Edit />
         </Button>
         <Button variant="ghost" onClick={handleDownloadImage}>
           <Download /> {/* Download button */}

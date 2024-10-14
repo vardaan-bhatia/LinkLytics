@@ -98,7 +98,7 @@ const Dashboard = () => {
         />
         <Filter className="absolute top-2 right-6 text-gray-500" />
       </div>
-      <h1 className="text-2xl font-bold  text-gray-500">
+      <h1 className="text-2xl font-bold text-center sm:text-left  text-gray-500">
         Click the Title to View Analytics
       </h1>
 
@@ -112,7 +112,9 @@ const Dashboard = () => {
             <UrlCard key={index} url={url} fetchurl={fetchUrls} /> // Render a card for each URL
           ))
         ) : (
-          <p className="text-gray-500">No URLs found</p> // Display if no URLs match
+          <p className="text-gray-500 text-center sm:text-left">
+            No URLs found
+          </p> // Display if no URLs match
         )}
       </div>
     </div>

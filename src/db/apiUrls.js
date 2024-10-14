@@ -6,7 +6,8 @@ export const getUrls = async (user_id) => {
   const { data, error } = await supabase
     .from("urls")
     .select("*")
-    .eq("user_id", user_id); // Filter by user ID
+    .eq("user_id", user_id)
+    .order("created_at", { ascending: false }); // Order by most recent first;
 
   if (error) throw new Error(error.message); // Handle any errors
 
@@ -14,10 +15,22 @@ export const getUrls = async (user_id) => {
 };
 
 // Delete a specific URL by ID
-export const deleteUrls = async (id) => {
-  const { data, error } = await supabase.from("urls").delete().eq("id", id); // Delete the URL with the given ID
 
-  if (error) throw new Error(error.message); // Handle any errors
+export const deleteUrls = async ({ id, short_url }) => {
+  // Delete QR code from storage
+  const { error: storageError } = await supabase.storage
+    .from("qrs")
+    .remove([`qr-${short_url}`]);
+
+  if (storageError) {
+    throw new Error(storageError.message); // Handle storage errors
+  }
+
+  const { data, error } = await supabase.from("urls").delete().eq("id", id);
+
+  if (error) {
+    throw new Error(error.message); // Handle any errors
+  }
 
   return data; // Return the deleted data
 };
