@@ -73,7 +73,7 @@ export async function createUrl(
   return data; // Return the created URL data
 }
 
-// get long urls
+// get long urls for redirect page
 
 export const getlongUrl = async (id) => {
   const { data, error } = await supabase

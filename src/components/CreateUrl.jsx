@@ -79,7 +79,6 @@ const CreateUrl = () => {
     try {
       // Validate form data against the defined schema
       await schema.validate(formValue, { abortEarly: false });
-
       // Generate a QR code blob from the canvas
       const canvas = ref.current.canvasRef.current;
       const blob = await new Promise((resolve) => canvas.toBlob(resolve));
