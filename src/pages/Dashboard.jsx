@@ -130,12 +130,14 @@ const Dashboard = () => {
 
       {/* Pagination Section */}
       <div>
-        <Pagination
-          onPageChange={handlePagination}
-          totalUrl={filteredUrls?.length || 0}
-          UrlperPage={UrlperPage}
-          activePage={page}
-        />
+        {filteredUrls?.length >= 3 && (
+          <Pagination
+            onPageChange={handlePagination}
+            totalUrl={filteredUrls?.length || 0}
+            UrlperPage={UrlperPage}
+            activePage={page}
+          />
+        )}
       </div>
     </div>
   );

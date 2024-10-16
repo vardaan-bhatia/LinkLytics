@@ -79,11 +79,10 @@ const UrlCard = ({ url = {}, fetchurl }) => {
           rel="noopener noreferrer"
           className="text-blue-500 font-bold text-sm sm:text-xl md:text-2xl hover:underline"
         >
-          {`https://linklytics.in/${
-            url?.custom_url ? url?.custom_url : url?.short_url
+          {`${import.meta.env.VITE_REDIRECT_URL}${
+            url?.custom_url ? url.custom_url : url.short_url
           }`}
         </a>
-
         <span className="text-gray-300 text-xs sm:text-lg mb-2 overflow-hidden">
           {url?.original_url} {/* Display original URL */}
         </span>

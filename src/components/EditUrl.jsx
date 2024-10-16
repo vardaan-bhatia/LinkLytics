@@ -78,7 +78,7 @@ const EditUrl = ({ url, onClose, fetchurl }) => {
     <Dialog defaultOpen onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader className="items-center">
-          <DialogTitle>Edit URL</DialogTitle>
+          <DialogTitle>Update Details</DialogTitle>
         </DialogHeader>
         {formValue.longUrl && (
           <div className="items-center justify-center flex">
