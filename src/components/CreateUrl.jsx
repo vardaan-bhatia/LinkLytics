@@ -126,7 +126,7 @@ const CreateUrl = () => {
             id="dialog-description"
             className="mb-2 text-center"
           >
-            Fill out the form to create a new shortened URL.
+            Fill out the details to create a new shortened URL.
           </DialogDescription>
           {formValue.longUrl && (
             <div className="items-center justify-center flex">
@@ -134,11 +134,12 @@ const CreateUrl = () => {
                 value={formValue.longUrl}
                 ref={ref}
                 logoImage="/vite.svg"
+                qrStyle="dots"
               />
             </div>
           )}
         </DialogHeader>
-        <div className="space-y-6" onKeyDown={handleKey}>
+        <div className="space-y-4" onKeyDown={handleKey}>
           {/* Input field for the title of the short link */}
           <Input
             name="title"

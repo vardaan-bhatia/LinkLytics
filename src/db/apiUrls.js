@@ -76,15 +76,16 @@ export async function createUrl(
 // get long urls for redirect page
 
 export const getlongUrl = async (id) => {
+  // Fetch the URL details from the 'urls' table by checking if the 'id' matches either the short_url or custom_url
   const { data, error } = await supabase
     .from("urls")
     .select("id,original_url")
-    .or(`short_url.eq.${id},custom_url.eq.${id}`)
-    .single(); // Delete the URL with the given ID
+    .or(`short_url.eq.${id},custom_url.eq.${id}`) // Match the provided 'id' with either the 'short_url' or 'custom_url' field
+    .single(); // Ensure that only a single record is returned
 
-  if (error) throw new Error(error.message); // Handle any errors
+  if (error) throw new Error(error.message); // Throw an error if the query fails
 
-  return data; // Return the deleted data
+  return data; // Return the fetched data, which contains the long/original URL
 };
 
 // single url for link page to show single url and the analytics

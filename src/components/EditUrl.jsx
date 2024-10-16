@@ -29,7 +29,7 @@ const EditUrl = ({ url, onClose, fetchurl }) => {
     longUrl: Yup.string()
       .url("Must be a valid URL")
       .required("Original URL is required"),
-    customUrl: Yup.string().url("Must be a valid URL").nullable(),
+    customUrl: Yup.string(),
   });
 
   const { loading, fn: fnUpdateUrl } = useFetch(updateUrls, {
@@ -68,6 +68,12 @@ const EditUrl = ({ url, onClose, fetchurl }) => {
     }
   };
 
+  // Trigger form submission on Enter key press
+  const handleKey = (e) => {
+    if (e.key === "Enter") {
+      handleSubmit();
+    }
+  };
   return (
     <Dialog defaultOpen onOpenChange={onClose}>
       <DialogContent>
@@ -76,11 +82,14 @@ const EditUrl = ({ url, onClose, fetchurl }) => {
         </DialogHeader>
         {formValue.longUrl && (
           <div className="items-center justify-center flex">
-            <QRCode value={formValue.longUrl} logoImage="/vite.svg" />
+            <QRCode
+              value={formValue.longUrl}
+              logoImage="/vite.svg"
+              qrStyle="dots"
+            />
           </div>
         )}
-
-        <div className="mb-4">
+        <div onKeyDown={handleKey} className="space-y-3">
           <Input
             name="title"
             value={formValue.title}
@@ -89,9 +98,6 @@ const EditUrl = ({ url, onClose, fetchurl }) => {
           />
           {errors.title && <Error message={errors.title} />}{" "}
           {/* Show error for title */}
-        </div>
-
-        <div className="mb-4">
           <Input
             name="longUrl"
             value={formValue.longUrl}
@@ -100,9 +106,6 @@ const EditUrl = ({ url, onClose, fetchurl }) => {
           />
           {errors.longUrl && <Error message={errors.longUrl} />}{" "}
           {/* Show error for long URL */}
-        </div>
-
-        <div className="mb-4">
           <Input
             name="customUrl"
             value={formValue.customUrl}
@@ -112,7 +115,6 @@ const EditUrl = ({ url, onClose, fetchurl }) => {
           {errors.customUrl && <Error message={errors.customUrl} />}{" "}
           {/* Show error for custom URL */}
         </div>
-
         <DialogFooter className="gap-3">
           <Button
             disabled={loading}

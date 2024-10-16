@@ -54,12 +54,12 @@ const Header = () => {
                 <AvatarImage
                   src={
                     user?.user_metadata?.profile_pic ||
+                    user?.user_metadata?.picture ||
                     user?.user_metadata?.avatar_url
                   }
                 />
                 <AvatarFallback>
-                  {user?.user_metadata?.name?.charAt(0).toUpperCase()} //
-                  Display user's initial if profile pic is not available
+                  {user?.user_metadata?.name?.charAt(0).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>

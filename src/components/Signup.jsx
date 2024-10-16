@@ -78,6 +78,21 @@ const Signup = () => {
       }
     }
   };
+  const handleGoogleLogin = async () => {
+    try {
+      await googleLogin(); // Attempt Google login
+    } catch (error) {
+      console.error("Google login error:", error);
+      setFormError({ api: "Failed to login with Google. Please try again." }); // Set API error message
+    }
+  };
+
+  // Handle Enter key press for Signup
+  const handleKey = (e) => {
+    if (e.key === "Enter") {
+      handleSignup(); // Trigger Signup on Enter key press
+    }
+  };
 
   return (
     <Card
