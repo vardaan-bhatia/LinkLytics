@@ -10,12 +10,13 @@ import { urlState } from "@/UserContext";
 import Error from "@/components/Error";
 import UrlCard from "@/components/UrlCard";
 import CreateUrl from "../components/CreateUrl";
+import Pagination from "@/components/Pagination";
 
 // Main Dashboard component
 const Dashboard = () => {
   const [searchKey, setSearchKey] = useState(""); // Search input state
   const { user } = urlState(); // Access user state
-
+  const [page, setpage] = useState(1);
   // Fetch URLs based on user ID
   const {
     data: urlData,
@@ -47,6 +48,15 @@ const Dashboard = () => {
     url?.title?.toLowerCase().includes(searchKey.toLowerCase())
   );
 
+  // Logic to handle the pagination
+  const UrlperPage = 3;
+  const currentUrls = filteredUrls?.length
+    ? filteredUrls.slice(page * UrlperPage - UrlperPage, page * UrlperPage)
+    : [];
+
+  const handlePagination = (index) => {
+    setpage(index);
+  };
   return (
     <div className="flex flex-col gap-6 p-4">
       {/* Loading spinner */}
@@ -108,7 +118,7 @@ const Dashboard = () => {
       {/* URL Cards */}
       <div className="space-y-4">
         {filteredUrls?.length ? (
-          filteredUrls.map((url, index) => (
+          currentUrls.map((url, index) => (
             <UrlCard key={index} url={url} fetchurl={fetchUrls} /> // Render a card for each URL
           ))
         ) : (
@@ -116,6 +126,16 @@ const Dashboard = () => {
             No URLs found
           </p> // Display if no URLs match
         )}
+      </div>
+
+      {/* Pagination Section */}
+      <div>
+        <Pagination
+          onPageChange={handlePagination}
+          totalUrl={filteredUrls?.length || 0}
+          UrlperPage={UrlperPage}
+          activePage={page}
+        />
       </div>
     </div>
   );

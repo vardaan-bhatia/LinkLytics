@@ -62,7 +62,7 @@ const Hero = () => {
           />
           <Button
             type="submit"
-            className="h-14 w-full sm:w-auto px-8 text-lg font-semibold bg-white text-black hover:bg-gray-200 transition-colors duration-200 rounded-b-md sm:rounded-none sm:rounded-r-md"
+            className="h-14 w-full sm:w-auto px-8 text-lg font-semibold bg-blue-500 hover:bg-blue-400 text-white transition-colors duration-200 rounded-b-md sm:rounded-none sm:rounded-r-md"
           >
             Try Now!
           </Button>

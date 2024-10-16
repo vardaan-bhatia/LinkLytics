@@ -94,7 +94,7 @@ const UrlCard = ({ url = {}, fetchurl }) => {
       </div>
 
       {/* Button div for actions */}
-      <div className="flex flex-row sm:flex-col justify-between h-full md:ml-4">
+      <div className="flex flex-row md:flex-col justify-between h-full md:ml-4">
         <Button variant="ghost" onClick={handleCopyLink}>
           {copyLink ? <Check /> : <Copy />}{" "}
           {/* Display check icon if link copied */}

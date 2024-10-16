@@ -47,39 +47,42 @@ const Header = () => {
         </h1>
       </Link>
       <div className="flex items-center space-x-4">
-        {user ? ( // Check if user is logged in
-          <DropdownMenu>
-            <DropdownMenuTrigger className="w-10 rounded-full overflow-hidden">
-              <Avatar>
-                <AvatarImage
-                  src={
-                    user?.user_metadata?.profile_pic ||
-                    user?.user_metadata?.picture ||
-                    user?.user_metadata?.avatar_url
-                  }
-                />
-                <AvatarFallback>
-                  {user?.user_metadata?.name?.charAt(0).toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>{user?.user_metadata?.name}</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Link to="/dashboard" className="flex">
-                  <Link2Icon className="mr-2 h-4 w-4" />
-                  My Links
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="text-red-500">
-                <LogOut className="mr-2 h-4 w-4" />
-                <span onClick={handleLogout} className="cursor-pointer">
-                  Logout
-                </span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+        {user ? (
+          <>
+            <Link to="/dashboard" className="flex mr-5">
+              <Button className="bg-blue-500 hover:bg-blue-400 text-white">
+                My Links
+              </Button>
+            </Link>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="w-10 rounded-full overflow-hidden">
+                <Avatar>
+                  <AvatarImage
+                    src={
+                      user?.user_metadata?.profile_pic ||
+                      user?.user_metadata?.picture ||
+                      user?.user_metadata?.avatar_url
+                    }
+                  />
+                  <AvatarFallback>
+                    {user?.user_metadata?.name?.charAt(0).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="mt-2">
+                <DropdownMenuLabel>
+                  {user?.user_metadata?.name}
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="text-red-500">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span onClick={handleLogout} className="cursor-pointer">
+                    Logout
+                  </span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </>
         ) : (
           <Button
             onClick={() => navigate("/auth")}
