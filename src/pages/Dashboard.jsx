@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { BarLoader } from "react-spinners";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Filter } from "lucide-react";
@@ -11,6 +10,7 @@ import Error from "@/components/Error";
 import UrlCard from "@/components/UrlCard";
 import CreateUrl from "../components/CreateUrl";
 import Pagination from "@/components/Pagination";
+import LoadingBar from "@/components/LoadingBar";
 
 // Main Dashboard component
 const Dashboard = () => {
@@ -34,7 +34,6 @@ const Dashboard = () => {
     getClicks,
     urlData?.map((url) => url.id) // Pass URL IDs for fetching click data
   );
-
   useEffect(() => {
     fetchUrls(); // Fetch URLs on component mount
   }, []);
@@ -60,16 +59,7 @@ const Dashboard = () => {
   return (
     <div className="flex flex-col gap-6 p-4">
       {/* Loading spinner */}
-      {urlLoading && clickLoading && (
-        <div
-          className="w-full mt-4 flex justify-center"
-          style={{
-            background: "linear-gradient(to right, #f64f59, #c471ed, #12c2e9)",
-          }}
-        >
-          <BarLoader width={"100%"} color="#ffffff" />
-        </div>
-      )}
+      {urlLoading && clickLoading && <LoadingBar />}
 
       {/* Statistics Cards */}
       <div className="grid grid-cols-2 gap-4">

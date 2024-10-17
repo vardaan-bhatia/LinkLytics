@@ -11,10 +11,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { urlState } from "@/UserContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Link2Icon, LogOut } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { logOut } from "@/db/apiAuth";
 import useFetch from "@/Hooks/useFetch";
-import { BarLoader } from "react-spinners";
+import LoadingBar from "./LoadingBar";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -69,12 +69,12 @@ const Header = () => {
                   </AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="mt-2">
+              <DropdownMenuContent className="mt-2 text-center">
                 <DropdownMenuLabel>
                   {user?.user_metadata?.name}
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-red-500">
+                <DropdownMenuItem className="text-red-500 items-center flex justify-center">
                   <LogOut className="mr-2 h-4 w-4" />
                   <span onClick={handleLogout} className="cursor-pointer">
                     Logout
@@ -93,14 +93,7 @@ const Header = () => {
         )}
       </div>
       {loading && ( // Show loading spinner while logging out
-        <div
-          className="w-full mt-4 "
-          style={{
-            background: "linear-gradient(to right, #f64f59, #c471ed, #12c2e9)",
-          }}
-        >
-          <BarLoader width={"100%"} color="#ffffff" />
-        </div>
+        <LoadingBar />
       )}
     </nav>
   );

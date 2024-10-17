@@ -3,8 +3,8 @@ import { getlongUrl } from "@/db/apiUrls";
 import useFetch from "@/Hooks/useFetch";
 import React from "react";
 import { useParams } from "react-router-dom";
-import { BarLoader } from "react-spinners";
 import { useEffect } from "react";
+import LoadingBar from "@/components/LoadingBar";
 
 const RedirectLink = () => {
   const { id } = useParams();
@@ -26,14 +26,7 @@ const RedirectLink = () => {
   if (loading || loadingclick) {
     return (
       <>
-        <div
-          className="w-full mt-4  "
-          style={{
-            background: "linear-gradient(to right, #f64f59, #c471ed, #12c2e9)",
-          }}
-        >
-          <BarLoader width={"100%"} color="#ffffff" />
-        </div>
+        <LoadingBar />
         <br />
         Redirecting...
       </>

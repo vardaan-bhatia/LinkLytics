@@ -1,7 +1,7 @@
 import { urlState } from "@/UserContext";
 import { useNavigate } from "react-router-dom";
-import { BarLoader } from "react-spinners";
 import { useEffect } from "react";
+import LoadingBar from "./LoadingBar";
 
 const ProtectedRoute = ({ children }) => {
   const { loading, isAuthenticated } = urlState(); // Access auth state from context
@@ -14,7 +14,7 @@ const ProtectedRoute = ({ children }) => {
     }
   }, [isAuthenticated, loading, navigate]); // Dependency array to rerun effect when state changes
 
-  if (loading) return <BarLoader width={"100%"} color="#36d7b7" />; // Show loading spinner while checking auth state
+  if (loading) return <LoadingBar />; // Show loading spinner while checking auth state
 
   return isAuthenticated ? children : null; // Render children if authenticated, otherwise null
 };

@@ -43,9 +43,7 @@ export const storeClicks = async ({ id, original_url }) => {
   }
 };
 
-// get click for single url
-
-export async function getClicksForSingleUrl(url_id) {
+export async function getClicksForUrl(url_id) {
   const { data, error } = await supabase
     .from("clicks")
     .select("*")
