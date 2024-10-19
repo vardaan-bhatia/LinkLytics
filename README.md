@@ -65,25 +65,18 @@ yarn dev
 
 ![image](https://github.com/user-attachments/assets/1ef47350-59ce-4a40-b59e-0df8a2a6fb24)
 
----
 ![image](https://github.com/user-attachments/assets/9c34abbd-9a99-43bf-a03d-5e459d81972f)
 
----
 ![image](https://github.com/user-attachments/assets/3cbc8162-431b-48fa-b5a7-2f6e65d516f3)
 
----
 ![image](https://github.com/user-attachments/assets/c1ebb228-69e9-4a61-b2e1-5a01fabf8bc1)
 
----
 ![image](https://github.com/user-attachments/assets/b134f167-662a-4c3d-aa57-4939ba0c0725)
 
----
 ![image](https://github.com/user-attachments/assets/a6760522-fec1-47d0-afbe-3e16dadcd5a0)
 
----
 ![image](https://github.com/user-attachments/assets/cf926a59-71d2-4ebe-ae1f-39d9b2ad3e76)
 
----
 ![image](https://github.com/user-attachments/assets/e91d4b36-ac0b-4bc1-87f6-bf888026be6c)
 
 
