@@ -4,8 +4,8 @@ import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import Hero from "./pages/Hero";
 import Link from "./pages/Link";
-import RedirectLink from "./pages/redirectLink";
-import AppLayout from "./appLayout"; // Layout with navigation and header
+import RedirectLink from "./pages/RedirectLink";
+import AppLayout from "./AppLayout"; // Layout with navigation and header
 import ProtectedRoute from "./components/ProtectedRoute";
 
 // Main App component for routing
