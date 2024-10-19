@@ -55,7 +55,7 @@ const Link = () => {
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(
-      `https://linklytics.in/${singleUrl?.short_url}`
+      `https://linklytics.netlify.app/${singleUrl?.short_url}`
     );
     setCopyLink(true);
     setTimeout(() => {
@@ -102,7 +102,7 @@ const Link = () => {
               </CardHeader>
               <CardContent>
                 <a
-                  href={`/${
+                  href={`https://linklytics.netlify.app/${
                     singleUrl?.custom_url
                       ? singleUrl?.custom_url
                       : singleUrl?.short_url

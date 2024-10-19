@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Check, Copy, Download, Edit, Trash } from "lucide-react";
 import useFetch from "@/Hooks/useFetch"; // Custom hook for API fetching
-import { deleteUrls, updateUrls } from "@/db/apiUrls"; // Add updateUrls import
+import { deleteUrls } from "@/db/apiUrls"; // Add updateUrls import
 import { BeatLoader } from "react-spinners"; // Loader component for async actions
 import EditUrl from "./EditUrl"; // Import the Edit URL component
 
@@ -33,7 +33,9 @@ const UrlCard = ({ url = {}, fetchurl }) => {
 
   // Function to copy the short URL to clipboard
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(`https://linklytics.in/${url?.short_url}`); // Copy URL to clipboard
+    navigator.clipboard.writeText(
+      `https://linklytics.netlify.app/${url?.short_url}`
+    ); // Copy URL to clipboard
     setCopyLink(true); // Set copy status to true
     setTimeout(() => {
       setCopyLink(false); // Reset copy status after 3 seconds
@@ -74,7 +76,9 @@ const UrlCard = ({ url = {}, fetchurl }) => {
           </span>
         </Link>
         <a
-          href={`/${url?.custom_url ? url?.custom_url : url?.short_url}`}
+          href={`https://linklytics.netlify.app/${
+            url?.custom_url ? url?.custom_url : url?.short_url
+          }`}
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-500 font-bold text-sm sm:text-xl md:text-2xl hover:underline"
