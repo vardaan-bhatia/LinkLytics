@@ -80,6 +80,10 @@ const Link = () => {
       console.error("Error downloading the image:", error);
     }
   };
+  let link = "";
+  if (url) {
+    link = singleUrl.custom_url ? singleUrl.custom_url : singleUrl.short_url;
+  }
 
   return (
     <>
@@ -102,11 +106,7 @@ const Link = () => {
               </CardHeader>
               <CardContent>
                 <a
-                  href={`https://linklytics.vercel.app/${
-                    singleUrl?.custom_url
-                      ? singleUrl?.custom_url
-                      : singleUrl?.short_url
-                  }`}
+                  href={`https://linklytics.vercel.app/${link}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-600 font-semibold text-lg sm:text-2xl hover:underline"
