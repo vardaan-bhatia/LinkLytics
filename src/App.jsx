@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Auth from "./pages/auth";
+import Auth from "./pages/Auth";
 import Dashboard from "./pages/dashboard";
 import Hero from "./pages/Hero";
 import Link from "./pages/link";
