@@ -1,10 +1,10 @@
 # **Lynklytics: URL Shortener with Analytics**
 
-Lynklytics is a comprehensive URL shortener with built-in analytics. It's designed to provide detailed insights on link performance, such as click locations, devices used, and more. Built with **React Context API**, **Supabase**, **ShadCN**, and **Recharts**, it offers an intuitive and efficient user experience.
+Lynklytics is a URL shortener app with advanced analytics features. It provides an intuitive experience for managing and tracking shortened URLs with detailed statistics on location and device data. The app is mobile responsive and offers QR code generation for each shortened URL.
 
 ## **Video Demonstration**
 
-Check out the video demonstration of Lynklytics here: [DEMO VIDEO](https://youtu.be/B4H900xjVRQ) (Open in a new tab)
+Check out the video demonstration of Lynklytics here: [Video Demo](https://youtu.be/B4H900xjVRQ)
 
 ## **Key Features**
 
@@ -22,7 +22,6 @@ Check out the video demonstration of Lynklytics here: [DEMO VIDEO](https://youtu
 - **Backend & Database:** Supabase for real-time data storage and authentication.
 - **Data Visualization:** Recharts for displaying click analytics.
 - **Routing:** React Router
-- **Storage:** Supabase storage for handling QR code files.
 
 ## **Installation & Prerequisites**
 
@@ -64,17 +63,32 @@ yarn dev
 
 ## **Screenshots**
 
-![image](https://github.com/user-attachments/assets/6ca5b8f3-14dd-4506-a5c1-d21a5d4a35cf)
----
+![image](https://github.com/user-attachments/assets/1ef47350-59ce-4a40-b59e-0df8a2a6fb24)
 
-![image](https://github.com/user-attachments/assets/bd850edd-6816-4781-893b-2921d38dd15e)
 ---
+![image](https://github.com/user-attachments/assets/9c34abbd-9a99-43bf-a03d-5e459d81972f)
 
-![image](https://github.com/user-attachments/assets/36ad4cb9-c064-4514-91cc-5e15759ce1da)
 ---
+![image](https://github.com/user-attachments/assets/3cbc8162-431b-48fa-b5a7-2f6e65d516f3)
 
-![image](https://github.com/user-attachments/assets/c9a1f544-1fb6-4c38-8e72-9d6951ae7c82)
 ---
+![image](https://github.com/user-attachments/assets/c1ebb228-69e9-4a61-b2e1-5a01fabf8bc1)
 
-![image](https://github.com/user-attachments/assets/52ad05de-7f2b-492f-b422-e2ca4daff1ba)
 ---
+![image](https://github.com/user-attachments/assets/b134f167-662a-4c3d-aa57-4939ba0c0725)
+
+---
+![image](https://github.com/user-attachments/assets/a6760522-fec1-47d0-afbe-3e16dadcd5a0)
+
+---
+![image](https://github.com/user-attachments/assets/cf926a59-71d2-4ebe-ae1f-39d9b2ad3e76)
+
+---
+![image](https://github.com/user-attachments/assets/e91d4b36-ac0b-4bc1-87f6-bf888026be6c)
+
+
+
+
+
+
+
