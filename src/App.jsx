@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Auth from "./pages/Auth";
-import Dashboard from "./pages/dashboard";
+import Dashboard from "./pages/Dashboard";
 import Hero from "./pages/Hero";
 import Link from "./pages/link";
 import RedirectLink from "./pages/redirectLink";
