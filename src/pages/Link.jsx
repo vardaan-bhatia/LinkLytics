@@ -85,10 +85,10 @@ const Link = () => {
     <>
       {(clickLoading || urlLoading) && <LoadingBar />}
       <div className="container mx-auto p-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="flex flex-col lg:flex-row gap-8">
           {/* Left Section: QR Code and URL Details */}
-          <div className="space-y-4">
-            <div className="flex justify-center items-center md:justify-start mb-8">
+          <div className="flex-1 flex flex-col space-y-4">
+            <div className="flex justify-center items-center mb-8">
               <img
                 src={singleUrl?.qr}
                 alt="QR Code"
@@ -151,8 +151,12 @@ const Link = () => {
           </div>
 
           {/* Right Section: Analytics */}
-          <div className="flex flex-col justify-center space-y-4">
-            <Card>
+          <div className="flex-1 flex flex-col justify-between space-y-4">
+            {" "}
+            {/* Ensure flex-grow */}
+            <Card className="flex-grow">
+              {" "}
+              {/* This ensures equal height */}
               <CardHeader>
                 <CardTitle>Total Clicks</CardTitle>
               </CardHeader>
@@ -171,6 +175,10 @@ const Link = () => {
                   </p>
                 )}
               </CardContent>
+            </Card>
+            <Card className="flex-grow">
+              {" "}
+              {/* Keep cards of equal height */}
               <CardHeader>
                 <CardTitle>Location</CardTitle>
               </CardHeader>
@@ -185,6 +193,10 @@ const Link = () => {
                   </p>
                 )}
               </CardContent>
+            </Card>
+            <Card className="flex-grow">
+              {" "}
+              {/* Keep cards of equal height */}
               <CardHeader>
                 <CardTitle>Device</CardTitle>
               </CardHeader>
