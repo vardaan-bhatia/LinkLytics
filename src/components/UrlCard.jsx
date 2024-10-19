@@ -34,7 +34,7 @@ const UrlCard = ({ url = {}, fetchurl }) => {
   // Function to copy the short URL to clipboard
   const handleCopyLink = () => {
     navigator.clipboard.writeText(
-      `https://linklytics.netlify.app/${url?.short_url}`
+      `https://linklytics.vercel.app/${url?.short_url}`
     ); // Copy URL to clipboard
     setCopyLink(true); // Set copy status to true
     setTimeout(() => {
@@ -76,7 +76,7 @@ const UrlCard = ({ url = {}, fetchurl }) => {
           </span>
         </Link>
         <a
-          href={`https://linklytics.netlify.app/${
+          href={`https://linklytics.vercel.app/${
             url?.custom_url ? url?.custom_url : url?.short_url
           }`}
           target="_blank"
