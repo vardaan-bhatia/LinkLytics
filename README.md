@@ -1,6 +1,6 @@
 # **Lynklytics: URL Shortener with Analytics**
 
-ynklytics is a user-friendly URL shortener that not only simplifies sharing links but also provides powerful analytics to help you understand your audience. With Lynklytics, you can easily shorten long URLs while gaining valuable insights into link performance, including click locations and device usage. Built with modern technologies like **React Context API**, **Supabase**, **ShadCN**, and **Recharts**.
+Lynklytics is a user-friendly URL shortener that not only simplifies sharing links but also provides powerful analytics to help you understand your audience. With Lynklytics, you can easily shorten long URLs while gaining valuable insights into link performance, including click locations and device usage. Built with modern technologies like **React**, **React Context API**, **Supabase**, **ShadCN**, and **Recharts**.
 
 ## **Video Demonstration**
 
