@@ -81,7 +81,7 @@ const Link = () => {
     }
   };
   let link = "";
-  if (url) {
+  if (singleUrl) {
     link = singleUrl.custom_url ? singleUrl.custom_url : singleUrl.short_url;
   }
 
