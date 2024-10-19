@@ -1,109 +1,57 @@
-import React, { useCallback, useState } from "react";
-import { PieChart, Pie, Sector } from "recharts";
+/* eslint-disable react/prop-types */
+import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
-const data = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 },
-];
+const COLORS = ["#4CAF50", "#2196F3", "#FFC107", "#FF5722", "#673AB7"]; // New color palette
 
-const renderActiveShape = (props) => {
-  const RADIAN = Math.PI / 180;
-  const {
-    cx,
-    cy,
-    midAngle,
-    innerRadius,
-    outerRadius,
-    startAngle,
-    endAngle,
-    fill,
-    payload,
-    percent,
-    value,
-  } = props;
-  const sin = Math.sin(-RADIAN * midAngle);
-  const cos = Math.cos(-RADIAN * midAngle);
-  const sx = cx + (outerRadius + 10) * cos;
-  const sy = cy + (outerRadius + 10) * sin;
-  const mx = cx + (outerRadius + 30) * cos;
-  const my = cy + (outerRadius + 30) * sin;
-  const ex = mx + (cos >= 0 ? 1 : -1) * 22;
-  const ey = my;
-  const textAnchor = cos >= 0 ? "start" : "end";
+export default function DeviceChart({ stats }) {
+  if (!stats || stats.length === 0) {
+    return <p className="text-gray-500 text-center">No data available</p>; // Updated message styling
+  }
+
+  const deviceCount = stats.reduce((acc, item) => {
+    if (!acc[item.device]) {
+      acc[item.device] = 0;
+    }
+    acc[item.device]++;
+    return acc;
+  }, {});
+
+  const result = Object.keys(deviceCount).map((device) => ({
+    device,
+    count: deviceCount[device],
+  }));
 
   return (
-    <g>
-      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
-        {payload.name}
-      </text>
-      <Sector
-        cx={cx}
-        cy={cy}
-        innerRadius={innerRadius}
-        outerRadius={outerRadius}
-        startAngle={startAngle}
-        endAngle={endAngle}
-        fill={fill}
-      />
-      <Sector
-        cx={cx}
-        cy={cy}
-        startAngle={startAngle}
-        endAngle={endAngle}
-        innerRadius={outerRadius + 6}
-        outerRadius={outerRadius + 10}
-        fill={fill}
-      />
-      <path
-        d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
-        stroke={fill}
-        fill="none"
-      />
-      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-      <text
-        x={ex + (cos >= 0 ? 1 : -1) * 12}
-        y={ey}
-        textAnchor={textAnchor}
-        fill="#333"
-      >{`PV ${value}`}</text>
-      <text
-        x={ex + (cos >= 0 ? 1 : -1) * 12}
-        y={ey}
-        dy={18}
-        textAnchor={textAnchor}
-        fill="#999"
-      >
-        {`(Rate ${(percent * 100).toFixed(2)}%)`}
-      </text>
-    </g>
-  );
-};
-
-export default function DeviceChart() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const onPieEnter = useCallback(
-    (_, index) => {
-      setActiveIndex(index);
-    },
-    [setActiveIndex]
-  );
-
-  return (
-    <PieChart width={400} height={400}>
-      <Pie
-        activeIndex={activeIndex}
-        activeShape={renderActiveShape}
-        data={data}
-        cx={200}
-        cy={200}
-        innerRadius={60}
-        outerRadius={80}
-        fill="#8884d8"
-        dataKey="value"
-        onMouseEnter={onPieEnter}
-      />
-    </PieChart>
+    <div
+      style={{ width: "100%", height: 300 }}
+      className="shadow-lg rounded-lg overflow-hidden"
+    >
+      <ResponsiveContainer>
+        <PieChart>
+          <Pie
+            data={result}
+            labelLine={false}
+            label={({ device, percent }) =>
+              `${device}: ${(percent * 100).toFixed(0)}%`
+            }
+            dataKey="count"
+            animationBegin={0}
+            animationDuration={800}
+            animationEasing="ease-out"
+            isAnimationActive={true} // Enable animation
+          >
+            {result.map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={COLORS[index % COLORS.length]}
+              />
+            ))}
+          </Pie>
+        </PieChart>
+      </ResponsiveContainer>
+      <div className="text-center mt-4">
+        <h2 className="font-bold text-lg">Device Distribution</h2>
+      </div>
+    </div>
   );
 }

@@ -8,7 +8,7 @@ import { getClicksForUrl } from "@/db/apiClicks";
 import LoadingBar from "@/components/LoadingBar";
 import { Button } from "@/components/ui/button";
 import { Check, Copy, Download, Trash } from "lucide-react";
-import { BeatLoader } from "react-spinners";
+import { SyncLoader } from "react-spinners";
 import LocationChart from "@/components/LocationChart";
 import DeviceChart from "@/components/DeviceChart";
 
@@ -16,7 +16,7 @@ const Link = () => {
   const { id } = useParams();
   const { user } = urlState();
   const navigate = useNavigate();
-  const [copyLink, setCopyLink] = useState(false); // State to manage link copying status
+  const [copyLink, setCopyLink] = useState(false);
 
   const {
     data: singleUrl,
@@ -29,7 +29,7 @@ const Link = () => {
     data: clickData,
     loading: clickLoading,
     fn: fetchClicks,
-  } = useFetch(getClicksForUrl, id); // Pass URL IDs for fetching click data
+  } = useFetch(getClicksForUrl, id);
 
   useEffect(() => {
     fnsingleurl();
@@ -42,102 +42,112 @@ const Link = () => {
   if (urlError) {
     navigate("/dashboard");
   }
+
   const { loading: deleteLoading, fn: fnDelete } = useFetch(deleteUrls, {
     id: singleUrl?.id,
     short_url: singleUrl?.short_url,
   });
 
   const handleDelete = async () => {
-    await fnDelete(); // Execute delete function
+    await fnDelete();
     navigate("/dashboard");
   };
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(
       `https://linklytics.in/${singleUrl?.short_url}`
-    ); // Copy URL to clipboard
-    setCopyLink(true); // Set copy status to true
+    );
+    setCopyLink(true);
     setTimeout(() => {
-      setCopyLink(false); // Reset copy status after 3 seconds
+      setCopyLink(false);
     }, 3000);
   };
 
-  // For download funtionality
-
   const qr = singleUrl?.qr;
   const downloadName = singleUrl?.title;
+
   const handleDownloadImage = async () => {
     try {
       const response = await fetch(qr);
       const blob = await response.blob();
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
-      link.setAttribute("download", `${downloadName}.png`); // Set the download attribute
-      document.body.appendChild(link); // Append link to the body
-      link.click(); // Trigger the download
+      link.setAttribute("download", `${downloadName}.png`);
+      document.body.appendChild(link);
+      link.click();
       document.body.removeChild(link);
     } catch (error) {
-      console.error("Error downloading the image:", error); // Log any errors during download
+      console.error("Error downloading the image:", error);
     }
   };
-  const clickcity = clickData?.map((e) => e.city) || [];
 
-  const cityClicks = clickcity.reduce((acc, city) => {
-    const cityName = city || "Unknown"; // Handle unknown city case
-    acc[cityName] = (acc[cityName] || 0) + 1; // Increment the count for the city
-    return acc;
-  }, {});
   return (
     <>
       {(clickLoading || urlLoading) && <LoadingBar />}
       <div className="container mx-auto p-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Left Section: URL Details and QR */}
+          {/* Left Section: QR Code and URL Details */}
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-gray-800">
-              {singleUrl?.title}
-            </h2>
-            <a
-              href={`/${
-                singleUrl?.custom_url
-                  ? singleUrl?.custom_url
-                  : singleUrl?.short_url
-              }`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 font-semibold text-lg hover:underline"
-            >
-              {`${import.meta.env.VITE_REDIRECT_URL}${
-                singleUrl?.custom_url
-                  ? singleUrl?.custom_url
-                  : singleUrl?.short_url
-              }`}
-            </a>
-            <p className="text-gray-600 text-md break-words">
-              {singleUrl?.original_url}
-            </p>
-            <img
-              src={singleUrl?.qr}
-              alt="QR Code"
-              className="w-40 h-40 object-cover"
-            />
-            <div className="flex flex-row justify-between h-full md:ml-4">
-              <Button variant="ghost" onClick={handleCopyLink}>
-                {copyLink ? <Check /> : <Copy />}{" "}
-                {/* Display check icon if link copied */}
-              </Button>{" "}
-              <Button variant="ghost" onClick={handleDownloadImage}>
-                <Download /> {/* Download button */}
-              </Button>
-              <Button variant="ghost" onClick={handleDelete}>
-                {deleteLoading ? (
-                  <BeatLoader size={5} color="white" />
-                ) : (
-                  <Trash />
-                )}{" "}
-                {/* Show loader or trash icon */}
-              </Button>
+            <div className="flex justify-center items-center md:justify-start mb-8">
+              <img
+                src={singleUrl?.qr}
+                alt="QR Code"
+                className="h-72 object-cover rounded-lg shadow-lg ring-4 ring-blue-500 transition-transform transform hover:scale-105 hover:shadow-xl"
+              />
             </div>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>{singleUrl?.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <a
+                  href={`/${
+                    singleUrl?.custom_url
+                      ? singleUrl?.custom_url
+                      : singleUrl?.short_url
+                  }`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 font-semibold text-lg sm:text-2xl hover:underline"
+                >
+                  {`${import.meta.env.VITE_REDIRECT_URL}${
+                    singleUrl?.custom_url
+                      ? singleUrl?.custom_url
+                      : singleUrl?.short_url
+                  }`}
+                </a>
+                <p className="text-gray-600 text-md break-words">
+                  {singleUrl?.original_url}
+                </p>
+                <p className="text-gray-400 text-base font-mono">
+                  {new Date(singleUrl?.created_at).toLocaleString()}
+                </p>
+                <div className="flex flex-row mt-4">
+                  <Button variant="ghost" onClick={handleCopyLink}>
+                    {copyLink ? <Check /> : <Copy />}{" "}
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    onClick={handleDownloadImage}
+                    className="ml-2"
+                  >
+                    <Download />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    onClick={handleDelete}
+                    className="ml-2"
+                  >
+                    {deleteLoading ? (
+                      <SyncLoader size={7} color="white" />
+                    ) : (
+                      <Trash />
+                    )}
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
           {/* Right Section: Analytics */}
@@ -146,22 +156,48 @@ const Link = () => {
               <CardHeader>
                 <CardTitle>Total Clicks</CardTitle>
               </CardHeader>
-              {clickData?.length > 0 && (
-                <CardContent>
-                  <p className="text-2xl font-bold">{clickData?.length ?? 0}</p>
-                </CardContent>
-              )}{" "}
+              <CardContent>
+                {clickLoading ? (
+                  <SyncLoader color="#000" size={7} />
+                ) : clickData?.length > 0 ? (
+                  <div className="flex flex-col">
+                    <p className="text-6xl font-bold text-blue-600">
+                      {clickData.length}
+                    </p>
+                  </div>
+                ) : (
+                  <p className="text-gray-500 text-center">
+                    No statistics available
+                  </p>
+                )}
+              </CardContent>
               <CardHeader>
-                <CardTitle>location</CardTitle>
+                <CardTitle>Location</CardTitle>
               </CardHeader>
               <CardContent>
-                <LocationChart cityData={cityClicks} />
+                {clickLoading ? (
+                  <SyncLoader color="#000" size={7} />
+                ) : clickData && clickData.length > 0 ? (
+                  <LocationChart stats={clickData} />
+                ) : (
+                  <p className="text-gray-500 text-center">
+                    No location data available
+                  </p>
+                )}
               </CardContent>
               <CardHeader>
                 <CardTitle>Device</CardTitle>
               </CardHeader>
               <CardContent>
-                <DeviceChart />
+                {clickLoading ? (
+                  <SyncLoader color="#000" size={7} />
+                ) : clickData && clickData.length > 0 ? (
+                  <DeviceChart stats={clickData} />
+                ) : (
+                  <p className="text-gray-500 text-center">
+                    No device data available
+                  </p>
+                )}
               </CardContent>
             </Card>
           </div>

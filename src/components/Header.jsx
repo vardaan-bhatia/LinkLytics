@@ -50,7 +50,7 @@ const Header = () => {
         {user ? (
           <>
             <Link to="/dashboard" className="flex mr-5">
-              <Button className="bg-blue-500 hover:bg-blue-400 text-white">
+              <Button className="bg-blue-500 hover:bg-blue-400 text-white p-1 sm:p-3">
                 My Links
               </Button>
             </Link>
