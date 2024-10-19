@@ -111,7 +111,7 @@ const Link = () => {
                   rel="noopener noreferrer"
                   className="text-blue-600 font-semibold text-lg sm:text-2xl hover:underline"
                 >
-                  {`${import.meta.env.VITE_REDIRECT_URL}${
+                  {`https://linklytics.in/{
                     singleUrl?.custom_url
                       ? singleUrl?.custom_url
                       : singleUrl?.short_url
