@@ -1,28 +1,25 @@
 Lynklytics: URL Shortener with Analytics
-Lynklytics is a powerful and user-friendly URL shortener that provides detailed analytics. Built with React Context API, Supabase, ShadCN, and Recharts, it enables users to create short links and track clicks based on location, device, and more.
-
-Video Demo
-Check out the full demo of Lynklytics on YouTube:
-
+Lynklytics is a comprehensive URL shortener with built-in analytics. It's designed to provide detailed insights on link performance, such as click locations, devices used, and more. Built with React Context API, Supabase, ShadCN, and Recharts, it offers an intuitive and efficient user experience.
 
 Key Features
-URL Shortening: Create shortened URLs that are easy to share.
-QR Code Generation: Automatically generate QR codes for each short URL.
-Analytics Dashboard: Track and visualize click data such as locations, devices, and more.
-Mobile Responsive: Works seamlessly on both desktop and mobile devices.
-Custom Links: Optionally create custom short links.
-Fast and Secure: Built with modern tools for fast performance and secure data storage.
+URL Shortening: Shorten long URLs to make them easier to share and track.
+QR Code Generation: Automatically generates QR codes for each short URL.
+Analytics Dashboard: Provides detailed reports on user clicks, including location and device data.
+Custom Links: Option to create custom short links instead of auto-generated ones.
+Fast & Secure: Built with Supabase for fast and secure storage.
+Mobile Responsive: Fully responsive for mobile and tablet use.
 Technologies Used
-Frontend: React with Context API
-UI Components: ShadCN
-Analytics & Visualization: Recharts
-Database and Authentication: Supabase
-Storage: Supabase (for storing QR codes)
+Frontend: React with Context API and ShadCN for UI components.
+State Management: React Context API
+Backend & Database: Supabase for real-time data storage and authentication.
+Data Visualization: Recharts for displaying click analytics.
 Routing: React Router
+Storage: Supabase storage for handling QR code files.
 Installation & Prerequisites
-Prerequisites
-Node.js (v14 or higher)
+Node.js
+
 npm or yarn
+
 Setup
 Clone the repository:
 
@@ -52,8 +49,9 @@ Copy code
 npm run dev
 # or
 yarn dev
+Video Demo
+Check out the video demo of Lynklytics on YouTube:
+
+
+
 Screenshots
-
-
-Live Demo
-Experience Lynklytics live: [Insert Live Demo URL]
