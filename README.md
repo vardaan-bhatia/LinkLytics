@@ -16,6 +16,7 @@ Try out the Lynklytics app live [here](https://linklytics.netlify.app/).
 - **QR Code Generation:** Automatically generates QR codes for each short URL.
 - **Analytics Dashboard:** Provides detailed reports on user clicks, including location and device data.
 - **Custom Links:** Option to create custom short links instead of auto-generated ones.
+- **CRUD Operations:** Easily edit, copy, download, and delete URLs.
 - **Fast & Secure:** Built with Supabase for fast and secure storage.
 - **Mobile Responsive:** Fully responsive for mobile and tablet use.
 
