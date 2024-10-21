@@ -106,18 +106,18 @@ const Link = () => {
               </CardHeader>
               <CardContent>
                 <a
-                  href={`https://linklytics.vercel.app/${link}`}
+                  href={`/${link}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-600 font-semibold text-lg sm:text-2xl hover:underline"
                 >
-                  {`https://linklytics.in/{
+                  {`https://linklytics.in/${
                     singleUrl?.custom_url
                       ? singleUrl?.custom_url
                       : singleUrl?.short_url
                   }`}
                 </a>
-                <p className="text-gray-600 text-md break-words">
+                <p className="text-gray-400 text-md break-words max-w-xl w-full mb-5">
                   {singleUrl?.original_url}
                 </p>
                 <p className="text-gray-400 text-base font-mono">
@@ -162,7 +162,7 @@ const Link = () => {
               </CardHeader>
               <CardContent>
                 {clickLoading ? (
-                  <SyncLoader color="#000" size={7} />
+                  <SyncLoader color="#fdf8fa" size={7} />
                 ) : clickData?.length > 0 ? (
                   <div className="flex flex-col">
                     <p className="text-6xl font-bold text-blue-600">
@@ -184,7 +184,7 @@ const Link = () => {
               </CardHeader>
               <CardContent>
                 {clickLoading ? (
-                  <SyncLoader color="#000" size={7} />
+                  <SyncLoader color="#fdf8fa" size={7} />
                 ) : clickData && clickData.length > 0 ? (
                   <LocationChart stats={clickData} />
                 ) : (
@@ -202,7 +202,7 @@ const Link = () => {
               </CardHeader>
               <CardContent>
                 {clickLoading ? (
-                  <SyncLoader color="#000" size={7} />
+                  <SyncLoader color="#fdf8fa" size={7} />
                 ) : clickData && clickData.length > 0 ? (
                   <DeviceChart stats={clickData} />
                 ) : (

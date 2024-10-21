@@ -76,9 +76,7 @@ const UrlCard = ({ url = {}, fetchurl }) => {
           </span>
         </Link>
         <a
-          href={`https://linklytics.vercel.app/${
-            url?.custom_url ? url?.custom_url : url?.short_url
-          }`}
+          href={`/${url?.custom_url ? url?.custom_url : url?.short_url}`}
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-500 font-bold text-sm sm:text-xl md:text-2xl hover:underline"
@@ -87,7 +85,7 @@ const UrlCard = ({ url = {}, fetchurl }) => {
             url?.custom_url ? url.custom_url : url.short_url
           }`}
         </a>
-        <span className="text-gray-300 text-xs sm:text-lg mb-2 overflow-hidden">
+        <span className="text-gray-400 text-md break-words max-w-2xl w-full mb-5">
           {url?.original_url} {/* Display original URL */}
         </span>
         <span className="text-gray-400 text-base font-mono">
