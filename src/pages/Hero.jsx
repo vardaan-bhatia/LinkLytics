@@ -29,7 +29,7 @@ const Hero = () => {
     <div className="flex flex-col items-center mt-14 px-4">
       {/* Hero title with gradient text */}
       <h1
-        className="font-extrabold text-5xl bg-clip-text text-transparent text-center"
+        className="font-extrabold text-3xl sm:text-5xl bg-clip-text text-transparent text-center"
         style={{
           background: "linear-gradient(to right, #f64f59, #c471ed, #12c2e9)",
           WebkitBackgroundClip: "text",
