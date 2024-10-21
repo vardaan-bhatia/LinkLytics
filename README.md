@@ -4,7 +4,10 @@ Lynklytics is a user-friendly URL shortener that not only simplifies sharing lin
 
 ## **Video Demonstration**
 
-Check out the video demonstration of Lynklytics here: [Video Demo](https://youtu.be/B4H900xjVRQ)
+Check out the video demonstration of Lynklytics here: [Video Demo](https://youtu.be/B4H900xjVRQ).
+
+## **Live Demo**
+
 Try out the Lynklytics app live [here](https://linklytics.netlify.app/).
 
 ## **Key Features**
