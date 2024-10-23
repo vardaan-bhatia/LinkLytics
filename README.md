@@ -1,14 +1,14 @@
-# **Lynklytics: URL Shortener with Analytics**
+# **Linklytics: URL Shortener with Analytics**
 
-Lynklytics is a user-friendly URL shortener that not only simplifies sharing links but also provides powerful analytics to help you understand your audience. With Lynklytics, you can easily shorten long URLs while gaining valuable insights into link performance, including click locations and device usage. Built with modern technologies like **React**, **React Context API**, **Supabase**, **ShadCN**, and **Recharts**.
+Linklytics is a user-friendly URL shortener that not only simplifies sharing links but also provides powerful analytics to help you understand your audience. With Lynklytics, you can easily shorten long URLs while gaining valuable insights into link performance, including click locations and device usage. Built with modern technologies like **React**, **React Context API**, **Supabase**, **ShadCN**, and **Recharts**.
 
 ## **Video Demonstration**
 
-Check out the video demonstration of Lynklytics here: [Video Demo](https://youtu.be/B4H900xjVRQ).
+Check out the video demonstration of Linklytics here: [Video Demo](https://youtu.be/B4H900xjVRQ).
 
 ## **Live Demo**
 
-Try out the Lynklytics app live [here](https://linklytics.netlify.app/).
+Try out the Linklytics app live [here](https://linklytics.netlify.app/).
 
 ## **Key Features**
 
@@ -16,6 +16,7 @@ Try out the Lynklytics app live [here](https://linklytics.netlify.app/).
 - **QR Code Generation:** Automatically generates QR codes for each short URL.
 - **Analytics Dashboard:** Provides detailed reports on user clicks, including location and device data.
 - **Custom Links:** Option to create custom short links instead of auto-generated ones.
+- **CRUD Operations:** Easily edit, copy, download, and delete URLs.
 - **Fast & Secure:** Built with Supabase for fast and secure storage.
 - **Mobile Responsive:** Fully responsive for mobile and tablet use.
 
@@ -39,7 +40,7 @@ Clone the repository:
 
 ```bash
 git clone https://github.com/vardaan-bhatia/LinkLytics.git
-cd lynklytics
+cd linklytics
 ```
 
 Install dependencies:
