@@ -8,7 +8,7 @@ Check out the video demonstration of Linklytics here: [Video Demo](https://youtu
 
 ## **Live Demo**
 
-Try out the Linklytics app live [here](https://linklytics.netlify.app/).
+Try out the Linklytics app live [here](https://linklytics.online/).
 
 ## **Key Features**
 
@@ -50,6 +50,7 @@ npm install
 # or
 yarn install
 ```
+
 Set up environment variables:
 
 Create a `.env` file in the root of the project and add the following variables:
@@ -58,6 +59,7 @@ Create a `.env` file in the root of the project and add the following variables:
 REACT_APP_SUPABASE_URL=your_supabase_url
 REACT_APP_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
+
 Start the development server:
 
 ```bash
@@ -83,10 +85,3 @@ yarn dev
 ![image](https://github.com/user-attachments/assets/cf926a59-71d2-4ebe-ae1f-39d9b2ad3e76)
 
 ![image](https://github.com/user-attachments/assets/e91d4b36-ac0b-4bc1-87f6-bf888026be6c)
-
-
-
-
-
-
-
