@@ -74,11 +74,12 @@ const Header = () => {
                   {user?.user_metadata?.name}
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-red-500 items-center flex justify-center">
+                <DropdownMenuItem
+                  className="text-red-500 items-center flex justify-center  cursor-pointer"
+                  onClick={handleLogout}
+                >
                   <LogOut className="mr-2 h-4 w-4" />
-                  <span onClick={handleLogout} className="cursor-pointer">
-                    Logout
-                  </span>
+                  <span>Logout</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
