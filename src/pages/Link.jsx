@@ -54,12 +54,14 @@ const Link = () => {
   };
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(
-      `https://linklytics.vercel.app/${singleUrl?.short_url}`
-    );
-    setCopyLink(true);
+    const urlToCopy = singleUrl?.custom_url
+      ? `https://linklytics.online/${singleUrl?.custom_url}`
+      : `https://linklytics.online/${singleUrl?.short_url}`;
+
+    navigator.clipboard.writeText(urlToCopy); // Copy the URL to clipboard
+    setCopyLink(true); // Set copy status to true
     setTimeout(() => {
-      setCopyLink(false);
+      setCopyLink(false); // Reset copy status after 3 seconds
     }, 3000);
   };
 
@@ -115,7 +117,7 @@ const Link = () => {
                   rel="noopener noreferrer"
                   className="text-blue-600 font-semibold text-lg sm:text-2xl hover:underline"
                 >
-                  {`https://linklytics.in/${
+                  {`https://linklytics.online/${
                     singleUrl?.custom_url
                       ? singleUrl?.custom_url
                       : singleUrl?.short_url

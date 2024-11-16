@@ -31,11 +31,12 @@ const UrlCard = ({ url = {}, fetchurl }) => {
     }
   };
 
-  // Function to copy the short URL to clipboard
+  // Function to copy the short or custom URL to clipboard
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(
-      `https://linklytics.vercel.app/${url?.short_url}`
-    ); // Copy URL to clipboard
+    const urlToCopy = url?.custom_url
+      ? `https://linklytics.online/${url?.custom_url}`
+      : `https://linklytics.online/${url?.short_url}`;
+    navigator.clipboard.writeText(urlToCopy); // Copy the URL to clipboard
     setCopyLink(true); // Set copy status to true
     setTimeout(() => {
       setCopyLink(false); // Reset copy status after 3 seconds
@@ -81,7 +82,7 @@ const UrlCard = ({ url = {}, fetchurl }) => {
           rel="noopener noreferrer"
           className="text-blue-500 font-bold text-sm sm:text-xl md:text-2xl hover:underline"
         >
-          {`https://linklytics.in/${
+          {`https://linklytics.online/${
             url?.custom_url ? url.custom_url : url.short_url
           }`}
         </a>
