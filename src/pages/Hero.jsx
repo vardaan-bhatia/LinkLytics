@@ -29,7 +29,7 @@ const Hero = () => {
     <div className="flex flex-col items-center mt-14 px-4">
       {/* Hero title with gradient text */}
       <h1
-        className="font-extrabold text-5xl bg-clip-text text-transparent text-center"
+        className="font-extrabold text-4xl sm:text-5xl bg-clip-text text-transparent text-center"
         style={{
           background: "linear-gradient(to right, #f64f59, #c471ed, #12c2e9)",
           WebkitBackgroundClip: "text",
@@ -49,7 +49,7 @@ const Hero = () => {
 
       {/* URL input form */}
       <form
-        className="flex flex-col sm:flex-row items-center justify-center mt-12 sm:mt-20 w-full max-w-2xl"
+        className="flex flex-col sm:flex-row items-center justify-center mt-10 sm:mt-20 w-full max-w-2xl"
         onSubmit={handlelinkAuth}
       >
         <div className="w-full flex flex-col sm:flex-row gap-2">
